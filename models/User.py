@@ -31,8 +31,7 @@ class User(db.Model):
     profile_image = db.Column(db.String(128))
     user_ingredients = db.relationship(
         'Ingredient',
-        secondary='users_ingredients',
-        backref='users'
+        secondary='users_ingredients'
     )
 
     @hybrid_property
