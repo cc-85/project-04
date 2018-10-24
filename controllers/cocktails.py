@@ -1,9 +1,13 @@
 from flask import Blueprint, request, jsonify
+from models.Ingredient import Ingredient, IngredientSchema
+from models.User import User, UserSchema
 from models.Cocktail import Cocktail, CocktailSchema
-# from models.Ingredient import Ingredient, IngredientSchema
 
 cocktail_schema = CocktailSchema()
 cocktails_schema = CocktailSchema(many=True)
+
+user_schema = UserSchema()
+ingredient_schema = IngredientSchema()
 
 api = Blueprint('cocktails', __name__)
 

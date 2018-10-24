@@ -2,6 +2,21 @@ from app import db, ma
 from marshmallow import fields
 
 
+class CocktailIngredient(db.Model):
+    __tablename__ = 'cocktails_ingredients'
+    cocktail_id = db.Column(
+        db.Integer,
+        db.ForeignKey('cocktails.id'),
+        primary_key=True
+    )
+    ingredient_id = db.Column(
+        db.Integer,
+        db.ForeignKey('ingredients.id'),
+        primary_key=True
+    )
+    amount = db.Column(db.String(128))
+
+
 class Cocktail(db.Model):
     """
     Cocktail model
@@ -12,7 +27,11 @@ class Cocktail(db.Model):
     name = db.Column(db.String(20), nullable=False, unique=True)
     image = db.Column(db.String(128))
     method = db.Column(db.Text, nullable=False)
-    cocktail_ingredients = db.relationship('Ingredient', secondary='cocktails_ingredients_table')
+    ingredients = db.relationship(
+        'Ingredient',
+        secondary='cocktails_ingredients',
+        backref='cocktails'
+    )
 
     def __init__(self, data):
         for key, item in data.items():
@@ -40,8 +59,8 @@ class CocktailSchema(ma.Schema):
 
     name = fields.String(required=True)
     method = fields.String(required=True)
-    image = fields.String
-    cocktail_ingredients = fields.Nested('IngredientSchema', many=True)
+    image = fields.String()
+    ingredients = fields.Nested('IngredientSchema', many=True)
 
     class Meta:
         model = Cocktail
@@ -50,5 +69,5 @@ class CocktailSchema(ma.Schema):
             'name',
             'method',
             'image',
-            'cocktail_ingredients'
+            'ingredients'
         )

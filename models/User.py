@@ -3,6 +3,20 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from marshmallow import fields, validates_schema, ValidationError
 
 
+class UserIngredient(db.Model):
+    __tablename__ = 'users_ingredients'
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id'),
+        primary_key=True
+    )
+    ingredient_id = db.Column(
+        db.Integer,
+        db.ForeignKey('ingredients.id'),
+        primary_key=True
+    )
+
+
 class User(db.Model):
     """
     User model
@@ -15,7 +29,11 @@ class User(db.Model):
     email = db.Column(db.String(128), nullable=False, unique=True)
     _password = db.Column(db.String(128))
     profile_image = db.Column(db.String(128))
-    user_ingredients = db.relationship('Ingredient', secondary='users_ingredients_table')
+    user_ingredients = db.relationship(
+        'Ingredient',
+        secondary='users_ingredients',
+        backref='users'
+    )
 
     @hybrid_property
     def password(self):
