@@ -82,6 +82,22 @@ class UserSchema(ma.Schema):
                 'password_confirmation'
             )
 
+    @validates_schema
+    def validate_username(self, data):
+        if User.query.filter_by(username=data.get('username')).first() is not None:
+            raise ValidationError(
+                'That username is already registered',
+                'username'
+            )
+
+    @validates_schema
+    def validate_email(self, data):
+        if User.query.filter_by(email=data.get('email')).first() is not None:
+            raise ValidationError(
+                'That email is already registered',
+                'email'
+            )
+
     class Meta:
         model = User
         fields = (

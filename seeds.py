@@ -46,20 +46,27 @@ with app.app_context():
             amount='lots'
         )
     )
+    mojito.ingredients.append(
+        CocktailIngredient(
+            ingredient_id=whiskey.id,
+            amount='a dash'
+        )
+    )
 
     mojito.save()
 
     print('Database successfully seeded, cheers!')
 
+    caoimhe = User({
+        'username': 'CC-85',
+        'email': 'CC-85@gmail.com',
+        'password': 'pass',
+        'password_confirmation': 'pass'
+    })
 
+    caoimhe.user_ingredients.append(gin)
 
-    # caoimhe = User({
-    #     'username': 'CC-85',
-    #     'email': 'CC-85@gmail.com',
-    #     'password': 'pass'
-    # })
-    #
-    # caoimhe.save()
+    caoimhe.save()
 
 
 # category = Category(name=item)
