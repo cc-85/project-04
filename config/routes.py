@@ -1,8 +1,9 @@
 import os
 from app import app
+from controllers import cocktails
 
 # register your blueprints here...
-
+app.register_blueprint(cocktails.api, url_prefix='/api')
 
 @app.route('/', defaults={'path': ''})  # homepage
 @app.route('/<path:path>')  # anything else eg: app.js /css/style.css
