@@ -1,5 +1,5 @@
 from app import db, ma
-from marshmallow import fields
+from marshmallow import fields, post_dump
 
 
 class CocktailIngredient(db.Model):
@@ -21,7 +21,14 @@ class CocktailIngredient(db.Model):
 
 class CocktailIngredientSchema(ma.Schema):
     amount = fields.String()
-    name = fields.Pluck('IngredientSchema', 'name')
+    name = fields.Nested('IngredientSchema')
+
+    @post_dump
+    def remove_ingredient_key(self, data):
+        return {
+            'name': data.get('name').get('name'),
+            'amount': data.get('amount')
+        }
 
     class Meta:
         model = CocktailIngredient
@@ -43,8 +50,8 @@ class Cocktail(db.Model):
     method = db.Column(db.Text, nullable=False)
     ingredients = db.relationship(
         'CocktailIngredient',
-        cascade='delete-orphan, delete'
-        )
+        cascade='all, delete-orphan'
+    )
 
     def __init__(self, data):
         for key, item in data.items():
