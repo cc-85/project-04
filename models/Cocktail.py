@@ -1,5 +1,6 @@
 from app import db, ma
 from marshmallow import fields, post_dump
+from .Ingredient import Ingredient
 
 
 class CocktailIngredient(db.Model):
@@ -75,6 +76,20 @@ class Cocktail(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    def add_ingredients(self, ingredients):
+        for cocktail_ingredient in ingredients:
+            ingredient = Ingredient.query.filter_by(name=cocktail_ingredient['name']).first()
+            self.ingredients.append(
+                CocktailIngredient(
+                    ingredient_id=ingredient.id,
+                    amount=cocktail_ingredient['amount']
+                )
+            )
+
+    def remove_ingredients(self):
+        while self.ingredients:
+            self.ingredients.pop(0)
+
 
 class CocktailSchema(ma.Schema):
     """
@@ -95,3 +110,4 @@ class CocktailSchema(ma.Schema):
             'image',
             'ingredients'
         )
+        dump_only = ('ingredients', )

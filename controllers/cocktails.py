@@ -35,31 +35,15 @@ def show(id):
 def create():
     req_data = request.get_json()
     ingredients = req_data['ingredients']
-    if 'ingredients' in req_data:
-        del req_data['ingredients']
+    del req_data['ingredients']
 
     try:
         data = cocktail_schema.load(req_data)
     except ValidationError as error:
         return jsonify({'error': error.messages}), 422
 
-    # req_data = request.get_json()
-    # data, errors = cocktail_schema.load(req_data)
-    #
-    # if errors:
-    #     return jsonify({'errors': errors}), 422
-    print(data)
     cocktail = Cocktail(data)
-
-    for cocktail_ingredient in ingredients:
-        print(cocktail_ingredient)
-        ingredient = Ingredient.query.filter_by(name=cocktail_ingredient['name']).first()
-        cocktail.ingredients.append(
-            CocktailIngredient(
-                ingredient_id=ingredient.id,
-                amount=cocktail_ingredient['amount']
-            )
-        )
+    cocktail.add_ingredients(ingredients)
 
     cocktail.save()
 
@@ -75,35 +59,17 @@ def update(id):
     if not cocktail:
         return jsonify({'message': 'Not found'}), 404
 
-    # req_data = request.get_json()
-
     req_data = request.get_json()
     ingredients = req_data['ingredients']
-    if 'ingredients' in req_data:
-        del req_data['ingredients']
+    del req_data['ingredients']
 
     try:
         data = cocktail_schema.load(req_data)
     except ValidationError as error:
         return jsonify({'error': error.messages}), 422
 
-    # strip off the ingredients from cocktails
-
-    while cocktail.ingredients:
-        print(cocktail.ingredients)
-        cocktail.ingredients.pop(0)
-
-    for cocktail_ingredient in ingredients:
-        print(cocktail_ingredient)
-        ingredient = Ingredient.query.filter_by(name=cocktail_ingredient['name']).first()
-        cocktail.ingredients.append(
-            CocktailIngredient(
-                ingredient_id=ingredient.id,
-                amount=cocktail_ingredient['amount']
-            )
-        )
-
-    # add new ingredients as we did in POST
+    cocktail.remove_ingredients()
+    cocktail.add_ingredients(ingredients)
 
     cocktail.update(data)
 
