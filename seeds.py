@@ -2,21 +2,51 @@ from app import app, db
 from models.Cocktail import Cocktail, CocktailIngredient
 from models.User import User
 from models.Ingredient import Ingredient
+from flask import jsonify
+import requests
+import re
 
 
 with app.app_context():
     db.drop_all()
     db.create_all()
 
-    whiskey = Ingredient({
-        'name': 'Whiskey'
-    })
-    whiskey.save()
+    response = requests.get('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=13427').json()
+    print(response['drinks'][0]['strDrink'])
 
-    gin = Ingredient({
-        'name': 'Gin'
+    mojito = Cocktail({
+        'name': response['drinks'][0]['strDrink'],
+        'method': response['drinks'][0]['strInstructions'],
+        'image': response['drinks'][0]['strDrinkThumb'],
     })
-    gin.save()
+    mojito.save()
+
+    all_ingredients = requests.get('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list').json()
+    # print(all_ingredients['drinks'])
+
+    def convert_to_snake(name):
+        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+        return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+
+    for each_ingredient in all_ingredients['drinks']:
+        ingredient_name = convert_to_snake(each_ingredient['strIngredient1'])
+        # ingredient_name = (ingredient_name[:20]) if len(ingredient_name) > 20 else ingredient_name
+        print(each_ingredient['strIngredient1'])
+        print(ingredient_name)
+        ingredient_name = Ingredient({
+            'name': each_ingredient['strIngredient1']
+        })
+        ingredient_name.save()
+
+    # whiskey = Ingredient({
+    #     'name': 'Whiskey'
+    # })
+    # whiskey.save()
+    #
+    # gin = Ingredient({
+    #     'name': 'Gin'
+    # })
+    # gin.save()
 
     old_fashioned = Cocktail({
         'name': 'Old Fashioned',
