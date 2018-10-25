@@ -64,7 +64,7 @@ with app.app_context():
         'password_confirmation': 'pass'
     })
 
-    caoimhe.user_ingredients.append(gin)
+    caoimhe.ingredients.append(gin)
 
     caoimhe.save()
 
