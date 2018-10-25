@@ -25,10 +25,7 @@ def register():
 
 @api.route('/login', methods=['POST'])
 def login():
-    # data = user_schema.load(request.get_json())
-    # data=json.dumps(dict(
-    # email='joe@gmail.com',
-    # password='123456'
+
     data = request.get_json()
 
     user = User.query.filter_by(email=data.get('email')).first()

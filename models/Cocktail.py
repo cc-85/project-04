@@ -41,7 +41,10 @@ class Cocktail(db.Model):
     name = db.Column(db.String(20), nullable=False, unique=True)
     image = db.Column(db.String(128))
     method = db.Column(db.Text, nullable=False)
-    ingredients = db.relationship('CocktailIngredient')
+    ingredients = db.relationship(
+        'CocktailIngredient',
+        cascade='delete-orphan, delete'
+        )
 
     def __init__(self, data):
         for key, item in data.items():
@@ -50,6 +53,10 @@ class Cocktail(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
+
+        # remove the Ingredient
+        # save the ingredients as Cocktail Ingredient
+        # looping over each ingredient and appending
 
     def update(self, data):
         for key, item in data.items():

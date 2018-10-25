@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from models.Ingredient import Ingredient, IngredientSchema
 from models.User import User, UserSchema
 from models.Cocktail import Cocktail, CocktailSchema
+from marshmallow import ValidationError
 
 cocktail_schema = CocktailSchema()
 cocktails_schema = CocktailSchema(many=True)
@@ -31,11 +32,16 @@ def show(id):
 @api.route('/cocktails', methods=['POST'])
 # @secure_route
 def create():
-    req_data = request.get_json()
-    data, errors = cocktail_schema.load(req_data)
+    try:
+        data = cocktail_schema.load(request.get_json())
+    except ValidationError as error:
+        return jsonify({'error': error.messages}), 422
 
-    if errors:
-        return jsonify({'errors': errors}), 422
+    # req_data = request.get_json()
+    # data, errors = cocktail_schema.load(req_data)
+    #
+    # if errors:
+    #     return jsonify({'errors': errors}), 422
 
     cocktail = Cocktail(data)
     cocktail.save()
@@ -46,16 +52,23 @@ def create():
 @api.route('/cocktails/<int:id>', methods=['PUT', 'PATCH'])
 # @secure_route
 def update(id):
+
     cocktail = Cocktail.query.get(id)
 
     if not cocktail:
         return jsonify({'message': 'Not found'}), 404
 
-    req_data = request.get_json()
-    data, error = cocktail_schema.load(req_data)
+    # req_data = request.get_json()
 
-    if error:
-        return jsonify({'error': error}), 422
+    try:
+        data = cocktail_schema.load(request.get_json())
+    except ValidationError as error:
+        return jsonify({'error': error.messages}), 422
+
+    # data, error = cocktail_schema.load(req_data)
+    #
+    # if error:
+    #     return jsonify({'error': error}), 422
 
     cocktail.update(data)
 
