@@ -1,6 +1,7 @@
 from app import db, ma, bcrypt
 from sqlalchemy.ext.hybrid import hybrid_property
 from marshmallow import fields, validates_schema, ValidationError
+from .Ingredient import Ingredient
 
 
 class UserIngredient(db.Model):
@@ -29,7 +30,7 @@ class User(db.Model):
     email = db.Column(db.String(128), nullable=False, unique=True)
     _password = db.Column(db.String(128))
     profile_image = db.Column(db.String(128))
-    user_ingredients = db.relationship(
+    ingredients = db.relationship(
         'Ingredient',
         secondary='users_ingredients'
     )
@@ -62,6 +63,15 @@ class User(db.Model):
     def validate_password(self, plaintext):
         return bcrypt.check_password_hash(self._password, plaintext)
 
+    def add_ingredients(self, ingredients):
+        for cocktail_ingredient in ingredients:
+            ingredient = Ingredient.query.filter_by(name=cocktail_ingredient['name']).first()
+            self.ingredients.append(ingredient)
+
+    def remove_ingredients(self):
+        while self.ingredients:
+            self.ingredients.pop(0)
+
 
 class UserSchema(ma.Schema):
     """
@@ -72,7 +82,7 @@ class UserSchema(ma.Schema):
     email = fields.Email(required=True)
     password = fields.String(required=True)
     password_confirmation = fields.String(required=True)
-    user_ingredients = fields.Nested('IngredientSchema', many=True)
+    ingredients = fields.Nested('IngredientSchema', many=True)
 
     @validates_schema
     def validate_password(self, data):
@@ -82,21 +92,21 @@ class UserSchema(ma.Schema):
                 'password_confirmation'
             )
 
-    @validates_schema
-    def validate_username(self, data):
-        if User.query.filter_by(username=data.get('username')).first() is not None:
-            raise ValidationError(
-                'That username is already registered',
-                'username'
-            )
-
-    @validates_schema
-    def validate_email(self, data):
-        if User.query.filter_by(email=data.get('email')).first() is not None:
-            raise ValidationError(
-                'That email is already registered',
-                'email'
-            )
+    # @validates_schema
+    # def validate_username(self, data):
+    #     if User.query.filter_by(username=data.get('username')).first() is not None:
+    #         raise ValidationError(
+    #             'That username is already registered',
+    #             'username'
+    #         )
+    #
+    # @validates_schema
+    # def validate_email(self, data):
+    #     if User.query.filter_by(email=data.get('email')).first() is not None:
+    #         raise ValidationError(
+    #             'That email is already registered',
+    #             'email'
+    #         )
 
     class Meta:
         model = User
@@ -107,5 +117,5 @@ class UserSchema(ma.Schema):
             'password',
             'password_confirmation',
             'profile_image',
-            'user_ingredients'
+            'ingredients'
         )
