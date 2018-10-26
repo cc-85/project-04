@@ -1,6 +1,7 @@
 from app import db, ma
 from marshmallow import fields, post_dump
-from .Ingredient import Ingredient
+from .Ingredient import Ingredient, IngredientSchema
+from flask import jsonify
 
 
 class CocktailIngredient(db.Model):
@@ -77,14 +78,27 @@ class Cocktail(db.Model):
         db.session.commit()
 
     def add_ingredients(self, ingredients):
+
+        existing_ingredient_ids = [ingredient.ingredient_id for ingredient in self.ingredients]
+
         for cocktail_ingredient in ingredients:
             ingredient = Ingredient.query.filter_by(name=cocktail_ingredient['name']).first()
-            self.ingredients.append(
-                CocktailIngredient(
-                    ingredient_id=ingredient.id,
-                    amount=cocktail_ingredient['amount']
+
+            if not ingredient:
+                ingredient = Ingredient({
+                    'name': cocktail_ingredient['name']
+                })
+
+                ingredient.save()
+
+            if ingredient.id not in existing_ingredient_ids:
+
+                self.ingredients.append(
+                    CocktailIngredient(
+                        ingredient_id=ingredient.id,
+                        amount=cocktail_ingredient['amount']
+                    )
                 )
-            )
 
     def remove_ingredients(self):
         while self.ingredients:

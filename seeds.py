@@ -59,6 +59,36 @@ with app.app_context():
             'method': one_cocktail['drinks'][0]['strInstructions'],
             'image': one_cocktail['drinks'][0]['strDrinkThumb'],
         })
+
+        ingr1_type = one_cocktail['drinks'][0]['strIngredient1']
+        ingr1_amount = one_cocktail['drinks'][0]['strMeasure1']
+
+        # ingredients = []
+
+        i = 1
+        while i < 15:
+            # print(one_cocktail['drinks'][0]['strIngredient{}'.format(i)])
+
+            if (one_cocktail['drinks'][0]['strIngredient{}'.format(i)] != '' and one_cocktail['drinks'][0]['strIngredient{}'.format(i)] is not None):
+                # ingr_type = one_cocktail['drinks'][0]['strIngredient{}'.format(i)]
+                # ingr_measure = one_cocktail['drinks'][0]['strMeasure{}'.format(i)]
+
+                ingr_type = one_cocktail['drinks'][0]['strIngredient{}'.format(i)]
+                ingr_amount = one_cocktail['drinks'][0]['strMeasure{}'.format(i)]
+                print(ingr_type)
+                cocktail_name.add_ingredients([{"amount": ingr_amount, "name": ingr_type}])
+            else:
+                print('this cocktail has no {}th ingredient'.format(i))
+
+            i += 1
+
+        # ingredients = [{"amount": ingr1_amount, "name": ingr1_type}, {"amount": "lots of", "name": "Gin"}]
+        # ingredients.append({"amount": ingr1_amount, "name": ingr1_type})
+        # ingredients.append({"amount": "lots of", "name": "Gin"})
+
+        # print(ingredients)
+        # cocktail_name.add_ingredients(ingredients)
+
         cocktail_name.save()
         #     'name': each_ingredient['strIngredient1']
         # })
