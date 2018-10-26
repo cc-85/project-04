@@ -7,10 +7,10 @@ import 'bulma';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Register from './components/Register';
-// import Profile from './components/users/Profile';
-// import ProfileEdit from './components/users/ProfileEdit';
+import Profile from './components/users/Profile';
 import CocktailsIndex from './components/cocktails/CocktailsIndex';
 import CocktailsHome from './components/cocktails/CocktailsHome';
+import CocktailsShow from './components/cocktails/CocktailsShow';
 
 class App extends React.Component {
 
@@ -27,8 +27,8 @@ class App extends React.Component {
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
                 <Route path="/cocktails" component={CocktailsIndex} />
-                {/* <Route path="/profile/:id/edit" component={ProfileEdit} />
-                <Route path="/profile" component={Profile} /> */}
+                <Route path="/profile" component={Profile} /> */
+                <Route path="/cocktails/:id" component={CocktailsShow} />
                 <Route path="/" component={CocktailsHome} />
               </Switch>
 
