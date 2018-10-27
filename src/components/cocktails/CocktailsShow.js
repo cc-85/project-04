@@ -24,7 +24,30 @@ class CocktailsShow extends React.Component {
     if(!this.state.cocktail) return null;
     console.log(this.state);
     return (
-      <h1 className="title is-1">Cocktails Show page</h1>
+      <section className="section">
+        <div className="container">
+          <div className="columns">
+            <div className="column is-half">
+              <img src={ this.state.cocktail.image} alt={this.state.cocktail.name}/>
+            </div>
+
+            <div className="column is-half">
+              <h1 className="title is-2">{ this.state.cocktail.name }</h1>
+              <h2 className="title is-4">Ingredients</h2>
+              {this.state.cocktail.ingredients.map(ingredient =>
+                <div key={ingredient.name}>
+                  <p>
+                    {ingredient.amount} {ingredient.name}
+                  </p>
+                </div>
+              )}
+              <h2 className="title is-4">Method</h2>
+              <p>{ this.state.cocktail.method }</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
     );
   }
 }
