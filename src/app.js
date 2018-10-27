@@ -26,9 +26,9 @@ class App extends React.Component {
               <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
+                <Route path="/cocktails/:id" component={CocktailsShow} />
                 <Route path="/cocktails" component={CocktailsIndex} />
                 <Route path="/profile" component={Profile} /> */
-                <Route path="/cocktails/:id" component={CocktailsShow} />
                 <Route path="/" component={CocktailsHome} />
               </Switch>
 
