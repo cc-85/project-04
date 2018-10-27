@@ -3,6 +3,7 @@ from models.Ingredient import Ingredient, IngredientSchema
 from models.User import User, UserSchema
 from models.Cocktail import Cocktail, CocktailSchema, CocktailIngredient
 from models.Ingredient import Ingredient
+from lib.secure_route import secure_route
 from marshmallow import ValidationError
 
 cocktail_schema = CocktailSchema()
@@ -31,7 +32,7 @@ def show(id):
 
 
 @api.route('/cocktails', methods=['POST'])
-# @secure_route
+@secure_route
 def create():
     req_data = request.get_json()
     ingredients = req_data['ingredients']
@@ -51,7 +52,7 @@ def create():
 
 
 @api.route('/cocktails/<int:id>', methods=['PUT', 'PATCH'])
-# @secure_route
+@secure_route
 def update(id):
 
     cocktail = Cocktail.query.get(id)
@@ -77,7 +78,7 @@ def update(id):
 
 
 @api.route('/cocktails/<int:id>', methods=['DELETE'])
-# @secure_route
+@secure_route
 def delete(id):
     cocktail = Cocktail.query.get(id)
 

@@ -21,16 +21,16 @@ with app.app_context():
     # })
     # mojito.save()
 
-    all_ingredients = requests.get('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list').json()
-    # print(all_ingredients['drinks'])
-
-    for each_ingredient in all_ingredients['drinks']:
-        ingredient_name = each_ingredient['strIngredient1'].replace(" ", "_")
-        print(ingredient_name)
-        ingredient_name = Ingredient({
-            'name': each_ingredient['strIngredient1']
-        })
-        ingredient_name.save()
+    # all_ingredients = requests.get('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list').json()
+    # # print(all_ingredients['drinks'])
+    #
+    # for each_ingredient in all_ingredients['drinks']:
+    #     ingredient_name = each_ingredient['strIngredient1'].replace(" ", "_")
+    #     print(ingredient_name)
+    #     ingredient_name = Ingredient({
+    #         'name': each_ingredient['strIngredient1']
+    #     })
+    #     ingredient_name.save()
 
     # old_fashioned = Cocktail({
     #     'name': 'Old Fashioned',
@@ -43,7 +43,7 @@ with app.app_context():
     #
     # old_fashioned.save()
 
-    all_cocktails = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic').json()
+    all_cocktails = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Egg').json()
     # print(all_cocktails['drinks'])
 
     for each_cocktail in all_cocktails['drinks']:
@@ -60,8 +60,8 @@ with app.app_context():
             'image': one_cocktail['drinks'][0]['strDrinkThumb'],
         })
 
-        ingr1_type = one_cocktail['drinks'][0]['strIngredient1']
-        ingr1_amount = one_cocktail['drinks'][0]['strMeasure1']
+        # ingr1_type = one_cocktail['drinks'][0]['strIngredient1']
+        # ingr1_amount = one_cocktail['drinks'][0]['strMeasure1']
 
         # ingredients = []
 
