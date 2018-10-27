@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from models.User import User, UserSchema
 from marshmallow import ValidationError
+from lib.secure_route import secure_route
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
@@ -19,7 +20,7 @@ def show(id):
 
 
 @api.route('/users/<int:id>', methods=['PUT', 'PATCH'])
-# @secure_route
+@secure_route
 def update(id):
 
     user = User.query.get(id)
