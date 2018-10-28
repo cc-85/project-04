@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import Auth from '../../lib/Auth';
+import { Link, withRouter } from 'react-router-dom';
+
 
 
 class Profile extends React.Component {
@@ -39,12 +41,15 @@ class Profile extends React.Component {
           <h4 className="title is-4">Image link:</h4>
           <p>{  this.state.user.profile_image }</p>
 
+          <Link href="#" className="navbar-item nav-icon" to="/edit">Edit</Link>
+
           <h4 className="title is-4">Ingredients</h4>
           <ul>
             { this.state.user.ingredients ? this.state.user.ingredients.map(ingredient =>
               <li key={ingredient.id}>{ ingredient.name }</li>
             ) : <p>Add ingredients</p>}
           </ul>
+
 
         </div>
       </main>

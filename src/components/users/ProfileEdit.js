@@ -6,9 +6,10 @@ import Auth from '../../lib/Auth';
 class ProfileEdit extends React.Component {
   constructor() {
     super();
-    this.state = { user: {}, errors: {} };
+    this.state = { user: {}, errors: {}};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
   componentDidMount() {
@@ -24,6 +25,7 @@ class ProfileEdit extends React.Component {
   handleChange(e) {
     const user = { ...this.state.user, [e.target.name]: e.target.value };
     this.setState({ user, error: '' });
+    console.log(this.state);
   }
 
   handleSubmit(e) {
@@ -41,6 +43,8 @@ class ProfileEdit extends React.Component {
       .then(() => this.props.history.push('/profile'))
       .catch(() => this.setState({error: 'Invalid credentials'}));
   }
+
+
 
   render() {
     if(!this.state.user) return null;
@@ -121,27 +125,8 @@ class ProfileEdit extends React.Component {
               </div>
             </div>
 
-            {/* {
-            	"email": "james@gmail.com",
-            	"id": 2,
-            	"ingredients": [{"name": "Rum"}, {"name": "Brandy"}, {"name": "Egg"}],
-            	"password": "pass",
-            	"password_confirmation": "pass",
-            	"username": "James Robins",
-            	"profile_image": "https://assets3.thrillist.com/v1/image/1369741/size/tmg-article_default_mobile.jpg"
-            } */}
-
             <button className="button is-primary">Submit</button>
-
           </form>
-
-          <h4 className="title is-4">Ingredients</h4>
-          <ul>
-            { this.state.user.ingredients ? this.state.user.ingredients.map(ingredient =>
-              <li key={ingredient.id}>{ ingredient.name }</li>
-            ) : <p>Add ingredients</p>}
-          </ul>
-
         </div>
       </main>
     );
