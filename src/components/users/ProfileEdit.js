@@ -34,10 +34,11 @@ class ProfileEdit extends React.Component {
         this.state.user,
         {headers: {Authorization: `Bearer ${token}`}}
       )
-      .then( res => {
-        Auth.setToken(res.data.token);
-        this.props.history.push('/');
-      })
+      // .then( res => {
+      //   Auth.setToken(res.data.token);
+      //   this.props.history.push('/');
+      // })
+      .then(() => this.props.history.push('/profile'))
       .catch(() => this.setState({error: 'Invalid credentials'}));
   }
 
