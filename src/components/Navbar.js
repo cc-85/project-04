@@ -7,9 +7,9 @@ class Navbar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { user: null };
+    this.state = { navbarActive: false, user: null };
     this.logout = this.logout.bind(this);
-
+    this.toggleNavbar = this.toggleNavbar.bind(this);
   }
 
   getCurrentUser() {
@@ -20,9 +20,18 @@ class Navbar extends React.Component {
       .then(res => this.setState({ user: res.data }));
   }
 
+  componentDidUpdate(prevProps) {
+  // close navbar if we change "page"
+    if(prevProps.location.pathname !== this.props.location.pathname) this.setState({ navbarActive: false });
+  }
+
   logout() {
     Auth.logout();
     this.props.history.push('/');
+  }
+
+  toggleNavbar() {
+    this.setState({ navbarActive: !this.state.navbarActive });
   }
 
 
@@ -36,7 +45,7 @@ class Navbar extends React.Component {
             </Link>
 
             <a role="button"
-              className="navbar-burger"
+              className={`navbar-burger ${this.state.navbarActive ? 'is-active' : ''}`}
               data-target="navbar-menu"
               aria-label="menu"
               aria-expanded={this.state.navbarActive ? 'true' : 'false'}
@@ -49,7 +58,7 @@ class Navbar extends React.Component {
           </div>
 
 
-          <div className="navbar-menu">
+          <div className={`navbar-menu ${this.state.navbarActive ? 'is-active' : ''}`}>
             <div className="navbar-end">
               <Link className="navbar-item" to="/cocktails"> All cocktails</Link>
               {Auth.isAuthenticated() && <a className="navbar-item" onClick={this.logout}>Logout</a>}
