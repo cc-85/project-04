@@ -6,7 +6,7 @@ import Auth from '../../lib/Auth';
 class AddIngredients extends React.Component {
   constructor() {
     super();
-    this.state = { user: {}, errors: {}, ingredients: [] };
+    this.state = { user: {}, errors: {}, ingredients: [], allPossibleIngredients: [] };
 
     this.handleChange = this.handleChange.bind(this);
     this.printState = this.printState.bind(this);
@@ -25,12 +25,29 @@ class AddIngredients extends React.Component {
         ingredients: res.data.ingredients,
         user: res.data
       }));
+    axios
+      .get('/api/ingredients')
+      .then(res => this.setState({
+        allPossibleIngredients: res.data
+      }));
+
+
 
   }
 
   handleChange(e) {
     this.setState({ newIngredient: e.target.value });
+    const query = e.target.value;
+    const allPossibleIngredients = this.state.allPossibleIngredients.slice();
+    const ingredientsSearchResult = allPossibleIngredients.filter(ingredient => ingredient.name.includes(query));
     console.log(this.state);
+    console.log('search results ------> ' + ingredientsSearchResult);
+    console.log('search query ------> ' + query);
+    console.log(allPossibleIngredients);
+    this.setState({
+      newIngredient: e.target.value,
+      ingredientsSearchResult: ingredientsSearchResult
+    });
   }
 
   printState() {
@@ -95,6 +112,17 @@ class AddIngredients extends React.Component {
               <button onClick={this.handleNewIngredient} className="button is-primary">Add</button>
             </div>
           </div>
+
+          <h2 className="title is-4">Search Results: </h2>
+          <ul>
+
+            { this.state.ingredientsSearchResult ? this.state.ingredientsSearchResult.map((ingredient, index) =>
+              <div key={index}>
+                <li >{ ingredient.name }</li>
+              </div>
+
+            ) : <p>Enter Ingredient</p>}
+          </ul>
 
         </div>
       </main>

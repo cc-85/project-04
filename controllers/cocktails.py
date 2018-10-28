@@ -11,6 +11,7 @@ cocktails_schema = CocktailSchema(many=True)
 
 user_schema = UserSchema()
 ingredient_schema = IngredientSchema()
+ingredients_schema = IngredientSchema(many=True)
 
 api = Blueprint('cocktails', __name__)
 
@@ -87,3 +88,9 @@ def delete(id):
 
     cocktail.delete()
     return '', 204
+
+
+@api.route('/ingredients', methods=['GET'])
+def ingredients_index():
+    cocktails = Ingredient.query.all()
+    return ingredients_schema.jsonify(cocktails)
