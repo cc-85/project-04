@@ -3,7 +3,7 @@ import axios from 'axios';
 import Auth from '../../lib/Auth';
 
 
-class Profile extends React.Component {
+class ProfileEdit extends React.Component {
   constructor() {
     super();
     this.state = { cocktails: []};
@@ -24,7 +24,7 @@ class Profile extends React.Component {
       <main className="section">
         <div className="container">
 
-          <h1 className="title is-1">User Profile Page</h1>
+          <h1 className="title is-1">User Profile Edit Page</h1>
 
           <figure className="image profile-picture is-128x128">
             <img src={ this.state.user.profile_image } />
@@ -52,4 +52,4 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile;
+export default ProfileEdit;
