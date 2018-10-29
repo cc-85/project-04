@@ -80,8 +80,8 @@ class UserSchema(ma.Schema):
 
     username = fields.String(required=True)
     email = fields.Email(required=True)
-    password = fields.String(required=True)
-    password_confirmation = fields.String(required=True)
+    password = fields.String()
+    password_confirmation = fields.String()
     ingredients = fields.Nested('IngredientSchema', many=True)
 
     @validates_schema
