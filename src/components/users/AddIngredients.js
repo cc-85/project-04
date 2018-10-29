@@ -10,6 +10,7 @@ class AddIngredients extends React.Component {
     this.state = { user: null, errors: {} };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
 
   }
 
@@ -27,6 +28,17 @@ class AddIngredients extends React.Component {
   handleChange(e) {
     const user = { ...this.state.user, [e.target.name]: e.target.value };
     this.setState({ user }, () => console.log(this.state));
+  }
+
+  handleSave(){
+    const token = Auth.getToken();
+    axios
+      .put(`/api/users/${Auth.getPayload().sub}`,
+        this.state.user,
+        {headers: {Authorization: `Bearer ${token}`}}
+      )
+      .then(() => this.props.history.push('/profile'))
+      .catch(() => this.setState({error: 'Invalid credentials'}));
   }
 
   render() {
@@ -47,6 +59,7 @@ class AddIngredients extends React.Component {
             onChange={this.handleChange}
           />
 
+          <button onClick={this.handleSave} className="button is-primary">Save</button>
         </div>
       </main>
     );
