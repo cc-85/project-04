@@ -92,10 +92,6 @@ class UserSchema(ma.Schema):
                 'password_confirmation'
             )
 
-
-
-
-
     # @validates_schema
     # def validate_username(self, data):
     #     if User.query.filter_by(username=data.get('username')).first() is not None:

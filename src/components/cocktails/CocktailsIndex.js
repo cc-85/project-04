@@ -3,12 +3,13 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import FilterBar from '../FilterBar';
 import _ from 'lodash';
+import Auth from '../../lib/Auth';
 
 
 class CocktailsIndex extends React.Component {
   constructor() {
     super();
-    this.state = { cocktails: [], filter: '' };
+    this.state = { cocktails: [], filter: '', ingredients: [] };
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -16,6 +17,15 @@ class CocktailsIndex extends React.Component {
     axios
       .get('/api/cocktails')
       .then(res => this.setState({ cocktails: res.data}));
+    const token = Auth.getToken();
+    axios
+      .get(`/api/users/${Auth.getPayload().sub}`,
+        {headers: {Authorization: `Bearer ${token}`}}
+      )
+      .then(res => this.setState({
+        ingredients: res.data.ingredients
+      }));
+    //const yellow = [{name: 'Vodka'}, {name: 'Creme de Cacao'}];
   }
 
   handleChange(e) {
@@ -31,11 +41,17 @@ class CocktailsIndex extends React.Component {
     });
   }
 
-  //creates a filtered array for us to loop over
-  // filterCountries() {
-  //   const re = new RegExp(this.state.filter, 'i');
-  //   return _.filter(this.state.countries, country => re.test(country.name));
-  // }
+
+  hasIngredients(cocktail) {
+    const cocktailIngredients = cocktail.ingredients.map(ingredient => ingredient.name);
+    const userIngredients = this.state.ingredients.map(ingredient => ingredient.name);
+
+    const matchingIngredients = _.intersection(cocktailIngredients, userIngredients);
+    return matchingIngredients.length === cocktailIngredients.length;
+    //matchingIngredients.length > 0 
+  }
+
+
 
   render() {
     console.log(this.state);
@@ -48,7 +64,7 @@ class CocktailsIndex extends React.Component {
             {this.getFilteredCocktails().map(cocktail =>
               <div key={cocktail.id} className="column is-one-quarter">
                 <Link to={`/cocktails/${cocktail.id}`}>
-                  <div className="card">
+                  <div className={`card ${this.hasIngredients(cocktail) ? 'highlight' : ''}`}>
                     <div className="card-header">
                       <p className="card-header-title">
                         {cocktail.name}
