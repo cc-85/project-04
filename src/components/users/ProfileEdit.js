@@ -124,6 +124,7 @@ class ProfileEdit extends React.Component {
                 />
               </div>
             </div>
+            {this.state.error && <small className="help is-danger">{this.state.error}</small>}
 
             <button className="button is-primary">Submit</button>
           </form>

@@ -28,7 +28,8 @@ class AddIngredients extends React.Component {
     axios
       .get('/api/ingredients')
       .then(res => this.setState({
-        allPossibleIngredients: res.data
+        allPossibleIngredients: res.data,
+        ingredientsSearchResult: res.data
       }));
 
 
