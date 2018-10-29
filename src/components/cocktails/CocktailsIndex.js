@@ -25,8 +25,10 @@ class CocktailsIndex extends React.Component {
   //creates a sorted array for us to loop over
   getFilteredCocktails() {
     const re = new RegExp(this.state.filter, 'i');
-    return _.filter(this.state.cocktails, cocktail => re.test(cocktail.name));
-    // || cocktail.ingredients.some(re.test(name)));
+
+    return _.filter(this.state.cocktails, cocktail => {
+      return cocktail.ingredients.some(ingredient=> re.test(ingredient.name)) || re.test(cocktail.name);
+    });
   }
 
   //creates a filtered array for us to loop over
