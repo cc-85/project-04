@@ -37,7 +37,9 @@ def update(id):
     except ValidationError as error:
         return jsonify({'error': error.messages}), 422
 
-    user.remove_ingredients()
+    if (ingredients.name):
+        user.remove_ingredients()
+
     user.add_ingredients(ingredients)
 
     user.update(data)

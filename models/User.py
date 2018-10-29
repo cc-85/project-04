@@ -37,7 +37,7 @@ class User(db.Model):
 
     @hybrid_property
     def password(self):
-        pass
+        return self._password
 
     @password.setter
     def password(self, plaintext):
@@ -80,21 +80,22 @@ class UserSchema(ma.Schema):
 
     username = fields.String(required=True)
     email = fields.Email(required=True)
-    password = fields.String()
-    password_confirmation = fields.String()
+    # password = fields.String(required=False)
+    # password_confirmation = fields.String(required=False)
     ingredients = fields.Nested('IngredientSchema', many=True)
 
     @validates_schema
     def validate_password(self, data):
-        if(data.get('password') != data.get('password_confirmation')):
+        print(self)
+        if not data.get('password') and not self._password:
+            raise ValidationError(
+                'Please provide password'
+            )
+        elif(data.get('password') != data.get('password_confirmation')):
             raise ValidationError(
                 'Passwords do not match',
                 'password_confirmation'
             )
-
-
-
-
 
     # @validates_schema
     # def validate_username(self, data):
@@ -123,3 +124,4 @@ class UserSchema(ma.Schema):
             'profile_image',
             'ingredients'
         )
+        load_only = ('password', )

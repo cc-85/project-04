@@ -24,12 +24,12 @@ class ProfileEdit extends React.Component {
 
   handleChange(e) {
     const user = { ...this.state.user, [e.target.name]: e.target.value };
-    this.setState({ user, error: '' });
-    console.log(this.state);
+    this.setState({ user, error: '' }, () => console.log(this.state));
   }
 
   handleSubmit(e) {
     e.preventDefault();
+    console.log(this.state.user);
     const token = Auth.getToken();
     axios
       .put(`/api/users/${Auth.getPayload().sub}`,
