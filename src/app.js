@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import 'bulma';
 import './scss/style.scss';
 
+import FlashMessages from './components/FlashMessages';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -22,7 +23,7 @@ class App extends React.Component {
       <BrowserRouter>
         <div>
           <Navbar />
-          {/* <FlashMessages /> */}
+          <FlashMessages />
           <main className="section">
             <div className="container">
 

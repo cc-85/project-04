@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Auth from '../lib/Auth';
-
+import Flash from '../lib/Flash';
 
 class Register extends React.Component {
   constructor() {
@@ -22,6 +22,7 @@ class Register extends React.Component {
       .post('/api/register', this.state.credentials)
       .then( res => {
         Auth.setToken(res.data.token);
+        Flash.setMessage('success', 'Account created!');
         this.props.history.push('/');
       })
       .catch(() => this.setState({error: 'Invalid credentials'}));
