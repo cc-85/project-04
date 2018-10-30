@@ -36,12 +36,12 @@ class Register extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <h1 className="title is-1">Register page</h1>
             <div className="field">
-              <label className="label">User Name</label>
+              <label className="label">Name</label>
               <div className="control">
                 <input
                   className={`input ${this.state.error ? 'is-danger' : ''} `}
-                  name="username"
-                  placeholder="User Name"
+                  name="name"
+                  placeholder="Name"
                   onChange={this.handleChange}
                 />
               </div>
