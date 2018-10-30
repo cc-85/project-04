@@ -43,14 +43,6 @@ class Profile extends React.Component {
 
           <Link href="#" className="navbar-item nav-icon" to="/edit">Edit</Link>
 
-          <h4 className="title is-4">Ingredients</h4>
-          <ul>
-            { this.state.user.ingredients ? this.state.user.ingredients.map(ingredient =>
-              <li key={ingredient.id}>{ ingredient.name }</li>
-            ) : <p>Add ingredients</p>}
-          </ul>
-
-
         </div>
       </main>
     );
