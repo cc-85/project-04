@@ -81,8 +81,8 @@ class UserSchema(ma.Schema):
     username = fields.String(required=True)
     profile_image = fields.String(required=False)
     email = fields.Email(required=True)
-    # password = fields.String(required=False)
-    # password_confirmation = fields.String(required=False)
+    password = fields.String(required=True)
+    password_confirmation = fields.String(required=True)
     ingredients = fields.Nested('IngredientSchema', many=True)
 
     @post_dump

@@ -33,7 +33,7 @@ def update(id):
     del req_data['ingredients']
 
     try:
-        data = user_schema.load(req_data)
+        data = user_schema.load(req_data, partial=True)
     except ValidationError as error:
         return jsonify({'error': error.messages}), 422
 
