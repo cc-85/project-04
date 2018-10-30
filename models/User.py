@@ -1,6 +1,6 @@
 from app import db, ma, bcrypt
 from sqlalchemy.ext.hybrid import hybrid_property
-from marshmallow import fields, validates_schema, ValidationError
+from marshmallow import fields, validates_schema, ValidationError, post_dump
 from .Ingredient import Ingredient
 
 
@@ -29,7 +29,7 @@ class User(db.Model):
     username = db.Column(db.String(20), nullable=False, unique=True)
     email = db.Column(db.String(128), nullable=False, unique=True)
     _password = db.Column(db.String(128))
-    profile_image = db.Column(db.String(128))
+    profile_image = db.Column(db.String(128), nullable=True)
     ingredients = db.relationship(
         'Ingredient',
         secondary='users_ingredients'
@@ -79,19 +79,19 @@ class UserSchema(ma.Schema):
     """
 
     username = fields.String(required=True)
+    profile_image = fields.String(required=False)
     email = fields.Email(required=True)
     # password = fields.String(required=False)
     # password_confirmation = fields.String(required=False)
     ingredients = fields.Nested('IngredientSchema', many=True)
 
+    @post_dump
+    def remove_null_values(self, data):
+        return {key: value for key, value in data.items() if value is not None}
+
     @validates_schema
     def validate_password(self, data):
-        print(self)
-        if not data.get('password') and not self._password:
-            raise ValidationError(
-                'Please provide password'
-            )
-        elif(data.get('password') != data.get('password_confirmation')):
+        if data.get('password') != data.get('password_confirmation'):
             raise ValidationError(
                 'Passwords do not match',
                 'password_confirmation'

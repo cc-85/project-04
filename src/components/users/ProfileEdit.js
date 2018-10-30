@@ -99,7 +99,7 @@ class ProfileEdit extends React.Component {
               </div>
             </div>
 
-            <div className="field">
+            {/* <div className="field">
               <label className="label">Password</label>
               <div className="control">
                 <input
@@ -110,9 +110,9 @@ class ProfileEdit extends React.Component {
                   type="password"
                 />
               </div>
-            </div>
+            </div> */}
 
-            <div className="field">
+            {/* <div className="field">
               <label className="label">Confirm Password</label>
               <div className="control">
                 <input
@@ -123,7 +123,7 @@ class ProfileEdit extends React.Component {
                   type="password"
                 />
               </div>
-            </div>
+            </div> */}
             {this.state.error && <small className="help is-danger">{this.state.error}</small>}
 
             <button className="button is-primary">Submit</button>
