@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import FilterBar from '../FilterBar';
 import _ from 'lodash';
 import Auth from '../../lib/Auth';
-
+import Promise from 'bluebird';
 
 class CocktailsIndex extends React.Component {
   constructor() {
@@ -14,18 +14,31 @@ class CocktailsIndex extends React.Component {
   }
 
   componentDidMount() {
-    axios
-      .get('/api/cocktails')
-      .then(res => this.setState({ cocktails: res.data}));
-    const token = Auth.getToken();
-    axios
-      .get(`/api/users/${Auth.getPayload().sub}`,
-        {headers: {Authorization: `Bearer ${token}`}}
-      )
-      .then(res => this.setState({
-        ingredients: res.data.ingredients
-      }));
-    //const yellow = [{name: 'Vodka'}, {name: 'Creme de Cacao'}];
+
+    const requests = {
+      cocktails: axios.get('/api/cocktails').then(res => res.data),
+      ingredients: []
+    };
+
+    if(Auth.isAuthenticated()) {
+      const token = Auth.getToken();
+      const userId = Auth.getPayload().sub;
+      requests.ingredients = axios.get(`/api/users/${userId}`, {
+        headers: { Authorization: `Bearer ${token}`}
+      }).then(res => res.data.ingredients);
+    }
+
+    Promise.props(requests)
+      .then(res => {
+        const cocktails = res.cocktails.map(cocktail => {
+          cocktail.ingredientRatio = this.getIngredientRatio(cocktail, res.ingredients);
+          return cocktail;
+        });
+
+        res.cocktails = _.orderBy(cocktails, ['ingredientRatio', 'name'], ['desc', 'asc']);
+
+        this.setState(res);
+      });
   }
 
   handleChange(e) {
@@ -41,14 +54,23 @@ class CocktailsIndex extends React.Component {
     });
   }
 
-
-  hasIngredients(cocktail) {
+  getIngredientRatio(cocktail, ingredients) {
     const cocktailIngredients = cocktail.ingredients.map(ingredient => ingredient.name);
-    const userIngredients = this.state.ingredients.map(ingredient => ingredient.name);
+    const userIngredients = ingredients.map(ingredient => ingredient.name);
 
     const matchingIngredients = _.intersection(cocktailIngredients, userIngredients);
-    return matchingIngredients.length === cocktailIngredients.length;
-    //matchingIngredients.length > 0 
+    return matchingIngredients.length / cocktailIngredients.length;
+  }
+
+
+  getClassName(cocktail) {
+    if (cocktail.ingredientRatio === 1) {
+      return 'full-match';
+    } else if (cocktail.ingredientRatio > 0) {
+      return 'part-match';
+    } else {
+      return '';
+    }
   }
 
 
@@ -64,7 +86,7 @@ class CocktailsIndex extends React.Component {
             {this.getFilteredCocktails().map(cocktail =>
               <div key={cocktail.id} className="column is-one-quarter">
                 <Link to={`/cocktails/${cocktail.id}`}>
-                  <div className={`card ${this.hasIngredients(cocktail) ? 'highlight' : ''}`}>
+                  <div className={`card ${this.getClassName(cocktail)}`}>
                     <div className="card-header">
                       <p className="card-header-title">
                         {cocktail.name}
