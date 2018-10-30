@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Auth from '../../lib/Auth';
 import { Link } from 'react-router-dom';
-
+import AddIngredients from '../users/AddIngredients';
 
 
 class Profile extends React.Component {
@@ -42,7 +42,7 @@ class Profile extends React.Component {
           <p>{  this.state.user.profile_image }</p>
 
           <Link href="#" className="navbar-item nav-icon" to="/edit">Edit</Link>
-
+          <AddIngredients/>
         </div>
       </main>
     );

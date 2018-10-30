@@ -5,12 +5,15 @@ import FilterBar from '../FilterBar';
 import _ from 'lodash';
 import Auth from '../../lib/Auth';
 import Promise from 'bluebird';
+import Profile from '../users/Profile';
+import Modal from '../Modal';
 
 class CocktailsIndex extends React.Component {
   constructor() {
     super();
-    this.state = { cocktails: [], filter: '', ingredients: [] };
+    this.state = { cocktails: [], filter: '', ingredients: [], modelActive: 'is-active' };
     this.handleChange = this.handleChange.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
   componentDidMount() {
@@ -73,7 +76,9 @@ class CocktailsIndex extends React.Component {
     }
   }
 
-
+  handleCloseModal() {
+    this.setState({ modelActive: false });
+  }
 
   render() {
     console.log(this.state);
@@ -81,7 +86,22 @@ class CocktailsIndex extends React.Component {
       <main className="section">
         <div className="container">
           <h1 className="title is-1">Cocktails Index page</h1>
-          <FilterBar handleChange={this.handleChange} />
+          <Modal
+            modalActive={this.state.modelActive}
+            handleCloseModal={this.handleCloseModal}
+          />
+          {/* <IngredientsSelect
+            isMulti
+            name="colors"
+            ingredients={this.state.ingredients}
+            defaultValue={this.state.user.ingredients}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={this.handleChange}
+          /> */}
+
+          <Profile/>
+          {Auth.isAuthenticated() ? <FilterBar handleChange={this.handleChange} /> : <p>Sign in</p>}
           <div className="columns is-multiline">
             {this.getFilteredCocktails().map(cocktail =>
               <div key={cocktail.id} className="column is-one-quarter">
