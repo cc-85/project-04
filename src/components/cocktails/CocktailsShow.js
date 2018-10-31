@@ -46,7 +46,7 @@ class CocktailsShow extends React.Component {
                 //<div className={`card ${this.hasIngredients(cocktail) ? 'highlight' : ''}`}>
                 <div key={ingredient.name}>
                   {/* <p className={this.state.ingredients.includes(ingredient.name) ? 'highlight' : ''}> */}
-                  <p>{this.state.ingredients.includes(ingredient.name) ? '🍹' : '📝'}
+                  <p>{this.state.ingredients.includes(ingredient.name) ? '✅' : '🅾️'}
                     {ingredient.amount} {ingredient.name}
                   </p>
                 </div>

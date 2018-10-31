@@ -19,7 +19,8 @@ module.exports = {
   entry: './src/app.js',
   output: {
     path: path.resolve('public'),
-    filename: 'app.js'
+    filename: 'app.js',
+    publicPath: '/'
   },
   module: {
     loaders: [

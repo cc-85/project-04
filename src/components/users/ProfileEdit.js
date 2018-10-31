@@ -54,6 +54,10 @@ class ProfileEdit extends React.Component {
 
           <h1 className="title is-1">User Profile Edit Page</h1>
 
+          <figure className="image profile-picture is-128x128">
+            {!this.state.user.profile_image ? <img src='./assets/images/person-placeholder.jpg' /> : <img src={ this.state.user.profile_image } /> }
+          </figure>
+
           <form onSubmit={this.handleSubmit}>
 
             <div className="field">
@@ -74,7 +78,7 @@ class ProfileEdit extends React.Component {
               <div className="control">
                 <input
                   className={`input ${this.state.error ? 'is-danger' : ''} `}
-                  name="name"
+                  name="username"
                   placeholder="Name"
                   onChange={this.handleChange}
                   value={this.state.user.username  || ''}
@@ -82,9 +86,8 @@ class ProfileEdit extends React.Component {
               </div>
             </div>
 
-            <figure className="image profile-picture is-128x128">
-              <img src={ this.state.user.profile_image } />
-            </figure>
+
+
 
             <div className="field">
               <label className="label">Profile Image</label>
@@ -94,7 +97,7 @@ class ProfileEdit extends React.Component {
                   name="profile_image"
                   placeholder="Profile Image"
                   onChange={this.handleChange}
-                  value={this.state.user.profile_image  || ''}
+                  value={this.state.user.profile_image || ''}
                 />
               </div>
             </div>
