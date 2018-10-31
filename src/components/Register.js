@@ -6,14 +6,23 @@ import Flash from '../lib/Flash';
 class Register extends React.Component {
   constructor() {
     super();
-    this.state = { credentials: null };
+    this.state = { credentials: {} };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
-    const credentials = { ...this.state.credentials, [e.target.name]: e.target.value };
-    this.setState({ credentials, error: '' });
+    console.log(this.state.avatar);
+    const { name, value } = e.target;
+    const credentials = { ...this.state.credentials, [name]: value };
+    if(e.target.name === 'username' && !credentials.profile_image) {
+      Object.assign(credentials, { profile_image: `https://api.adorable.io/avatars/285/${value}.png` });
+    }
+
+    this.setState({
+      credentials,
+      error: ''
+    });
   }
 
   handleSubmit(e) {
@@ -40,7 +49,7 @@ class Register extends React.Component {
               <div className="control">
                 <input
                   className={`input ${this.state.error ? 'is-danger' : ''} `}
-                  name="name"
+                  name="username"
                   placeholder="Name"
                   onChange={this.handleChange}
                 />
@@ -54,6 +63,23 @@ class Register extends React.Component {
                   name="email"
                   placeholder="Email"
                   onChange={this.handleChange}
+                />
+              </div>
+            </div>
+
+            {this.state.credentials.profile_image && <figure className="image profile-picture is-128x128">
+              <img src={this.state.credentials.profile_image} />
+            </figure>}
+
+            <div className="field">
+              <label className="label">Profile image</label>
+              <div className="control">
+                <input
+                  className={`input ${this.state.error ? 'is-danger' : ''} `}
+                  name="profile_image"
+                  placeholder="Image URL"
+                  onChange={this.handleChange}
+                  //value={this.state.profile_image || this.state.avatar}
                 />
               </div>
             </div>
