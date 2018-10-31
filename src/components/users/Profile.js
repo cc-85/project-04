@@ -1,52 +1,45 @@
 import React from 'react';
-import axios from 'axios';
-import Auth from '../../lib/Auth';
 import { Link } from 'react-router-dom';
-import AddIngredients from '../users/AddIngredients';
+import IngredientsSelect from './IngredientsSelect';
 
 
-class Profile extends React.Component {
-  constructor() {
-    super();
-    this.state = { cocktails: []};
-  }
+const Profile = ({ user, ingredients, handleChange }) => {
+  return (
+    <main className="section">
+      <div className="container">
 
-  componentDidMount() {
-    const token = Auth.getToken();
-    axios.get(`/api/users/${Auth.getPayload().sub}`, {
-      headers: {Authorization: `Bearer ${token}`}
-    })
-      .then(res => this.setState({ user: res.data }));
+        <h1 className="title is-1">User Profile Page</h1>
 
-  }
+        <figure className="image profile-picture is-128x128">
+          <img src={ user.profile_image } />
+        </figure>
 
-  render() {
-    if(!this.state.user) return null;
-    return (
-      <main className="section">
-        <div className="container">
+        <h4 className="title is-4">Username:</h4>
+        <p>{ user.username }</p>
 
-          <h1 className="title is-1">User Profile Page</h1>
+        <h4 className="title is-4">Email:</h4>
+        <p>{ user.email }</p>
 
-          <figure className="image profile-picture is-128x128">
-            <img src={ this.state.user.profile_image } />
-          </figure>
+        <h4 className="title is-4">Image link:</h4>
+        <p>{ user.profile_image }</p>
 
-          <h4 className="title is-4">Username:</h4>
-          <p>{  this.state.user.username }</p>
+        <Link href="#" className="navbar-item nav-icon" to="/edit">Edit</Link>
 
-          <h4 className="title is-4">Email:</h4>
-          <p>{  this.state.user.email }</p>
+        <h1 className="title is-1">Ingredients Page</h1>
 
-          <h4 className="title is-4">Image link:</h4>
-          <p>{  this.state.user.profile_image }</p>
+        <IngredientsSelect
+          isMulti
+          name="colors"
+          ingredients={ingredients}
+          defaultValue={user.ingredients}
+          className="basic-multi-select"
+          classNamePrefix="select"
+          onChange={handleChange}
+        />
 
-          <Link href="#" className="navbar-item nav-icon" to="/edit">Edit</Link>
-          <AddIngredients/>
-        </div>
-      </main>
-    );
-  }
-}
+      </div>
+    </main>
+  );
+};
 
 export default Profile;

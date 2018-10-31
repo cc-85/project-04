@@ -11,7 +11,6 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/users/Profile';
 import ProfileEdit from './components/users/ProfileEdit';
-import AddIngredients from './components/users/AddIngredients';
 import CocktailsIndex from './components/cocktails/CocktailsIndex';
 // import CocktailsHome from './components/cocktails/CocktailsHome';
 import CocktailsShow from './components/cocktails/CocktailsShow';
@@ -36,7 +35,6 @@ class App extends React.Component {
                 {/* <Route path="/cocktails" component={CocktailsIndex} /> */}
                 <Route path="/edit" component={ProfileEdit} />
                 <Route path="/profile" component={Profile} />
-                <Route path="/ingredients" component={AddIngredients} />
                 <Route path="/" component={CocktailsIndex} />
               </Switch>
 
