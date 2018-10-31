@@ -13,7 +13,7 @@ class Login extends React.Component {
 
   handleChange(e) {
     const credentials = { ...this.state.credentials, [e.target.name]: e.target.value };
-    this.setState({ credentials, error: '' });
+    this.setState({ credentials, errors: '' });
   }
 
   handleSubmit(e) {
@@ -25,7 +25,7 @@ class Login extends React.Component {
         Flash.setMessage('success', 'Welcome back!');
         this.props.history.push('/');
       })
-      .catch(() => this.setState({error: 'Invalid credentials'}));
+      .catch(() => this.setState({errors: 'Invalid credentials'}));
   }
 
   render() {
@@ -39,7 +39,7 @@ class Login extends React.Component {
               <label className="label">Email</label>
               <div className="control">
                 <input
-                  className={`input ${this.state.error ? 'is-danger' : ''} `}
+                  className={`input ${this.state.errors ? 'is-danger' : ''} `}
                   name="email"
                   placeholder="Email" onChange={this.handleChange}
                 />
@@ -50,7 +50,7 @@ class Login extends React.Component {
               <label className="label">Password</label>
               <div className="control">
                 <input
-                  className={`input ${this.state.error ? 'is-danger' : ''} `}
+                  className={`input ${this.state.errors ? 'is-danger' : ''} `}
                   name="password"
                   placeholder="Password"
                   type="password"
@@ -58,7 +58,7 @@ class Login extends React.Component {
                 />
               </div>
             </div>
-            {this.state.error && <small className="help is-danger">{this.state.error}</small>}
+            {this.state.errors && <small className="help is-danger">{this.state.errors}</small>}
 
             <button className="button is-primary">Submit</button>
 

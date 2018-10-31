@@ -24,7 +24,7 @@ class ProfileEdit extends React.Component {
 
   handleChange(e) {
     const user = { ...this.state.user, [e.target.name]: e.target.value };
-    this.setState({ user, error: '' }, () => console.log(this.state));
+    this.setState({ user, errors: '' }, () => console.log(this.state));
   }
 
   handleSubmit(e) {
@@ -41,7 +41,7 @@ class ProfileEdit extends React.Component {
       //   this.props.history.push('/');
       // })
       .then(() => this.props.history.push('/profile'))
-      .catch(() => this.setState({error: 'Invalid credentials'}));
+      .catch(err => this.setState({ errors: err.response.data.error }));
   }
 
 
@@ -60,7 +60,7 @@ class ProfileEdit extends React.Component {
               <label className="label">Email</label>
               <div className="control">
                 <input
-                  className={`input ${this.state.error ? 'is-danger' : ''} `}
+                  className={`input ${this.state.errors.email ? 'is-danger' : ''} `}
                   name="email"
                   placeholder="Email"
                   onChange={this.handleChange}
@@ -68,19 +68,23 @@ class ProfileEdit extends React.Component {
                 />
               </div>
             </div>
+            {this.state.errors.email && <small className="help is-danger">{this.state.errors.email}</small>}
+
 
             <div className="field">
               <label className="label">Name</label>
               <div className="control">
                 <input
-                  className={`input ${this.state.error ? 'is-danger' : ''} `}
-                  name="name"
+                  className={`input ${this.state.errors.username ? 'is-danger' : ''} `}
+                  name="username"
                   placeholder="Name"
                   onChange={this.handleChange}
                   value={this.state.user.username  || ''}
                 />
               </div>
             </div>
+            {this.state.errors.username && <small className="help is-danger">{this.state.errors.username}</small>}
+
 
             <figure className="image profile-picture is-128x128">
               <img src={ this.state.user.profile_image } />
@@ -90,7 +94,7 @@ class ProfileEdit extends React.Component {
               <label className="label">Profile Image</label>
               <div className="control">
                 <input
-                  className={`input ${this.state.error ? 'is-danger' : ''} `}
+                  className={`input ${this.state.errors.profile_image ? 'is-danger' : ''} `}
                   name="profile_image"
                   placeholder="Profile Image"
                   onChange={this.handleChange}
@@ -98,33 +102,7 @@ class ProfileEdit extends React.Component {
                 />
               </div>
             </div>
-
-            {/* <div className="field">
-              <label className="label">Password</label>
-              <div className="control">
-                <input
-                  className={`input ${this.state.error ? 'is-danger' : ''} `}
-                  name="password"
-                  placeholder="Password"
-                  onChange={this.handleChange}
-                  type="password"
-                />
-              </div>
-            </div> */}
-
-            {/* <div className="field">
-              <label className="label">Confirm Password</label>
-              <div className="control">
-                <input
-                  className={`input ${this.state.error ? 'is-danger' : ''} `}
-                  name="password_confirmation"
-                  placeholder="Confirm Password"
-                  onChange={this.handleChange}
-                  type="password"
-                />
-              </div>
-            </div> */}
-            {this.state.error && <small className="help is-danger">{this.state.error}</small>}
+            {this.state.errors.profile_image && <small className="help is-danger">{this.state.errors.profile_image}</small>}
 
             <button className="button is-primary">Submit</button>
           </form>
