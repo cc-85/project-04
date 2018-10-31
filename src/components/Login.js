@@ -20,7 +20,7 @@ class Login extends React.Component {
     e.preventDefault();
     axios
       .post('/api/login', this.state.credentials)
-      .then( res => {
+      .then(res => {
         Auth.setToken(res.data.token);
         Flash.setMessage('success', 'Welcome back!');
         this.props.history.push('/');

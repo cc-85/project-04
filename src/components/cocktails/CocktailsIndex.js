@@ -26,12 +26,15 @@ class CocktailsIndex extends React.Component {
     this.handleLaunchModal = this.handleLaunchModal.bind(this);
   }
 
+  componentDidUpdate() {
+    if(!Auth.isAuthenticated() && this.state.user) this.setState({ user: null });
+  }
+
   componentDidMount() {
 
     const requests = {
       cocktails: axios.get('/api/cocktails').then(res => res.data),
-      ingredients: axios.get('/api/ingredients').then(res => res.data),
-      user: { ingredients: [] }
+      ingredients: axios.get('/api/ingredients').then(res => res.data)
     };
 
     if(Auth.isAuthenticated()) {
@@ -65,7 +68,7 @@ class CocktailsIndex extends React.Component {
     const re = new RegExp(this.state.filter, 'i');
 
     const cocktails = this.state.cocktails.map(cocktail => {
-      cocktail.ingredientRatio = this.getIngredientRatio(cocktail, this.state.user.ingredients);
+      cocktail.ingredientRatio = this.state.user ? this.getIngredientRatio(cocktail, this.state.user.ingredients) : 0;
       return cocktail;
     });
 
@@ -105,53 +108,48 @@ class CocktailsIndex extends React.Component {
   render() {
     if(!this.state.cocktails) return null;
     return (
-      <main className="section">
-        <div className="container">
-          {/* <h1 className="title is-1">Cocktails Index page</h1> */}
-          {/* <button onClick={this.handleLaunchModal}>Launch Modal</button> */}
-          <Modal
-            modalActive={this.state.modalActive}
-            handleCloseModal={this.handleCloseModal}
-            modalContent={this.modalContent}
+      <div>
+        <Modal
+          modalActive={this.state.modalActive}
+          handleCloseModal={this.handleCloseModal}
+          modalContent={this.modalContent}
+        />
+
+        {Auth.isAuthenticated() ? (
+          <Profile
+            user={this.state.user}
+            handleChange={this.handleChange}
+            ingredients={this.state.ingredients}
           />
+        ) : (
+          <NotSignedInCard/>
+        )}
 
-          {Auth.isAuthenticated() ? (
-            <Profile
-              user={this.state.user}
-              handleChange={this.handleChange}
-              ingredients={this.state.ingredients}
-            />
-          ) : (
-            <NotSignedInCard/>
-          )}
+        <FilterBar handleChange={this.handleSearch} />
 
-          <FilterBar handleChange={this.handleSearch} />
-
-          <div className="columns is-multiline">
-            {this.getOrderedAndFilteredCocktails().map(cocktail =>
-              <div key={cocktail.id} className="column is-one-quarter">
-                <Link to={`/cocktails/${cocktail.id}`}>
-                  <div className={`card ${this.getClassName(cocktail)}`}>
-                    <div className="card-header">
-                      <p className="card-header-title">
-                        {cocktail.name}
-                      </p>
-                    </div>
-
-                    <div className="card-image">
-                      <figure className="image">
-                        <img src={cocktail.image} alt={cocktail.name} />
-                      </figure>
-                    </div>
-
+        <div className="columns is-multiline">
+          {this.getOrderedAndFilteredCocktails().map(cocktail =>
+            <div key={cocktail.id} className="column is-one-quarter">
+              <Link to={`/cocktails/${cocktail.id}`}>
+                <div className={`card ${this.getClassName(cocktail)}`}>
+                  <div className="card-header">
+                    <p className="card-header-title">
+                      {cocktail.name}
+                    </p>
                   </div>
-                </Link>
-              </div>
-            )}
-          </div>
 
+                  <div className="card-image">
+                    <figure className="image">
+                      <img src={cocktail.image} alt={cocktail.name} />
+                    </figure>
+                  </div>
+
+                </div>
+              </Link>
+            </div>
+          )}
         </div>
-      </main>
+      </div>
 
     );
   }
