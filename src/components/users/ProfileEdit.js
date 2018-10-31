@@ -70,12 +70,12 @@ class ProfileEdit extends React.Component {
             </div>
 
             <div className="field">
-              <label className="label">Username</label>
+              <label className="label">Name</label>
               <div className="control">
                 <input
                   className={`input ${this.state.error ? 'is-danger' : ''} `}
-                  name="username"
-                  placeholder="Username"
+                  name="name"
+                  placeholder="Name"
                   onChange={this.handleChange}
                   value={this.state.user.username  || ''}
                 />
