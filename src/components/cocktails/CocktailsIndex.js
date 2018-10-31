@@ -106,15 +106,14 @@ class CocktailsIndex extends React.Component {
     return (
       <main className="section">
         <div className="container">
-          <h1 className="title is-1">Cocktails Index page</h1>
-          <button onClick={this.handleLaunchModal}>Launch Modal</button>
+          {/* <h1 className="title is-1">Cocktails Index page</h1> */}
+          {/* <button onClick={this.handleLaunchModal}>Launch Modal</button> */}
           <Modal
             modalActive={this.state.modalActive}
             handleCloseModal={this.handleCloseModal}
             modalContent={this.modalContent}
           />
 
-          <FilterBar handleChange={this.handleSearch} />
           {Auth.isAuthenticated() ? (
             <Profile
               user={this.state.user}
@@ -124,6 +123,9 @@ class CocktailsIndex extends React.Component {
           ) : (
             <p>Sign in</p>
           )}
+
+          <FilterBar handleChange={this.handleSearch} />
+
           <div className="columns is-multiline">
             {this.getOrderedAndFilteredCocktails().map(cocktail =>
               <div key={cocktail.id} className="column is-one-quarter">

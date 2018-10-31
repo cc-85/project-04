@@ -5,40 +5,39 @@ import IngredientsSelect from './IngredientsSelect';
 
 const Profile = ({ user, ingredients, handleChange }) => {
   return (
-    <main className="section">
-      <div className="container">
+    <div className="card">
 
-        <h1 className="title is-1">User Profile Page</h1>
+      <div className="card-content">
+        <div className="media">
+          <div className="media-left">
+            <figure className="image is-48x48">
+              <img src={ user.profile_image } alt="User image"/>
+            </figure>
+          </div>
+          <div className="media-content">
+            <p className="title is-4">{ user.username }</p>
+          </div>
+          <div className="media-right">
+            <Link href="#" className="navbar-item nav-icon" to="/edit">Edit Profile</Link>
+          </div>
+        </div>
 
-        <figure className="image profile-picture is-128x128">
-          <img src={ user.profile_image } />
-        </figure>
-
-        <h4 className="title is-4">Username:</h4>
-        <p>{ user.username }</p>
-
-        <h4 className="title is-4">Email:</h4>
-        <p>{ user.email }</p>
-
-        <h4 className="title is-4">Image link:</h4>
-        <p>{ user.profile_image }</p>
-
-        <Link href="#" className="navbar-item nav-icon" to="/edit">Edit</Link>
-
-        <h1 className="title is-1">Ingredients Page</h1>
-
-        <IngredientsSelect
-          isMulti
-          name="colors"
-          ingredients={ingredients}
-          defaultValue={user.ingredients}
-          className="basic-multi-select"
-          classNamePrefix="select"
-          onChange={handleChange}
-        />
+        <div className="content">
+          <p>My ingredients:</p>
+          <IngredientsSelect
+            isMulti
+            name="colors"
+            ingredients={ingredients}
+            defaultValue={user.ingredients}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={handleChange}
+          />
+        </div>
 
       </div>
-    </main>
+    </div>
+
   );
 };
 
