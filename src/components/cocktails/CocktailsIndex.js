@@ -5,53 +5,74 @@ import FilterBar from '../FilterBar';
 import _ from 'lodash';
 import Auth from '../../lib/Auth';
 import Promise from 'bluebird';
+import Profile from '../users/Profile';
+import NotSignedInCard from '../users/NotSignedInCard';
+import Modal from '../Modal';
 
 class CocktailsIndex extends React.Component {
   constructor() {
     super();
-    this.state = { cocktails: [], filter: '', ingredients: [] };
+    this.state = {
+      cocktails: null,
+      filter: '',
+      user: null,
+      ingredients: [],
+      modalActive: false,
+      modalContent: 'HelloWorld!'
+    };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleLaunchModal = this.handleLaunchModal.bind(this);
   }
 
   componentDidMount() {
 
     const requests = {
       cocktails: axios.get('/api/cocktails').then(res => res.data),
-      ingredients: []
+      ingredients: axios.get('/api/ingredients').then(res => res.data),
+      user: { ingredients: [] }
     };
 
     if(Auth.isAuthenticated()) {
       const token = Auth.getToken();
       const userId = Auth.getPayload().sub;
-      requests.ingredients = axios.get(`/api/users/${userId}`, {
+      requests.user = axios.get(`/api/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}`}
-      }).then(res => res.data.ingredients);
+      }).then(res => res.data);
     }
 
     Promise.props(requests)
-      .then(res => {
-        const cocktails = res.cocktails.map(cocktail => {
-          cocktail.ingredientRatio = this.getIngredientRatio(cocktail, res.ingredients);
-          return cocktail;
-        });
+      .then(res => this.setState(res));
+  }
 
-        res.cocktails = _.orderBy(cocktails, ['ingredientRatio', 'name'], ['desc', 'asc']);
-
-        this.setState(res);
-      });
+  handleSearch(e) {
+    this.setState({ filter: e.target.value });
   }
 
   handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+    const token = Auth.getToken();
+    const user = { ...this.state.user, [e.target.name]: e.target.value };
+    axios
+      .put(`/api/users/${Auth.getPayload().sub}`, user, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(() => this.setState({ user }, () => console.log(this.state)));
   }
 
   //creates a sorted array for us to loop over
-  getFilteredCocktails() {
+  getOrderedAndFilteredCocktails() {
     const re = new RegExp(this.state.filter, 'i');
 
-    return _.filter(this.state.cocktails, cocktail => {
+    const cocktails = this.state.cocktails.map(cocktail => {
+      cocktail.ingredientRatio = this.getIngredientRatio(cocktail, this.state.user.ingredients);
+      return cocktail;
+    });
+
+    const filtered = _.filter(cocktails, cocktail => {
       return cocktail.ingredients.some(ingredient=> re.test(ingredient.name)) || re.test(cocktail.name);
     });
+    return _.orderBy(filtered, ['ingredientRatio', 'name'], ['desc', 'asc']);
   }
 
   getIngredientRatio(cocktail, ingredients) {
@@ -73,17 +94,41 @@ class CocktailsIndex extends React.Component {
     }
   }
 
+  handleCloseModal() {
+    this.setState({ modalActive: false });
+  }
 
+  handleLaunchModal(){
+    this.setState({ modalActive: true });
+  }
 
   render() {
-    console.log(this.state);
+    if(!this.state.cocktails) return null;
     return (
       <main className="section">
         <div className="container">
-          <h1 className="title is-1">Cocktails Index page</h1>
-          <FilterBar handleChange={this.handleChange} />
+          {/* <h1 className="title is-1">Cocktails Index page</h1> */}
+          {/* <button onClick={this.handleLaunchModal}>Launch Modal</button> */}
+          <Modal
+            modalActive={this.state.modalActive}
+            handleCloseModal={this.handleCloseModal}
+            modalContent={this.modalContent}
+          />
+
+          {Auth.isAuthenticated() ? (
+            <Profile
+              user={this.state.user}
+              handleChange={this.handleChange}
+              ingredients={this.state.ingredients}
+            />
+          ) : (
+            <NotSignedInCard/>
+          )}
+
+          <FilterBar handleChange={this.handleSearch} />
+
           <div className="columns is-multiline">
-            {this.getFilteredCocktails().map(cocktail =>
+            {this.getOrderedAndFilteredCocktails().map(cocktail =>
               <div key={cocktail.id} className="column is-one-quarter">
                 <Link to={`/cocktails/${cocktail.id}`}>
                   <div className={`card ${this.getClassName(cocktail)}`}>
