@@ -9,11 +9,13 @@ const Profile = ({ user, ingredients, handleChange }) => {
 
       <div className="card-content">
         <div className="media">
-          <div className="media-left">
-            <figure className="image is-48x48">
-              <img src={ user.profile_image } alt="User image"/>
-            </figure>
-          </div>
+          { user.profile_image && (
+            <div className="media-left">
+              <figure className="image is-48x48">
+                <img src={ user.profile_image } alt="User image"/>
+              </figure>
+            </div>
+          )}
           <div className="media-content">
             <p className="title is-4">{ user.username }</p>
           </div>
