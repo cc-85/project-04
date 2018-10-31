@@ -12,11 +12,11 @@ class Register extends React.Component {
   }
 
   handleChange(e) {
-    console.log(this.state.avatar);
+    console.log(this.state.credentials);
     const { name, value } = e.target;
     const credentials = { ...this.state.credentials, [name]: value };
     const errors = { ...this.state.errors, [name]: '' };
-    if(e.target.name === 'username' && !credentials.profile_image) {
+    if(e.target.name === 'username') {
       Object.assign(credentials, { profile_image: `https://api.adorable.io/avatars/285/${value}.png` });
     }
 
@@ -45,8 +45,17 @@ class Register extends React.Component {
 
       <main className="section">
         <div className="container">
+          <h1 className="title is-1">Register page</h1>
+
+          {/* {this.state.credentials.profile_image && <figure className="image profile-picture is-128x128">
+            <img src={this.state.credentials.profile_image} />
+          </figure>} */}
+
+          <figure className="image profile-picture is-128x128">
+            {!this.state.credentials.profile_image ? <img src='./assets/images/person-placeholder.jpg' /> : <img src={this.state.credentials.profile_image} />}
+          </figure>
+
           <form onSubmit={this.handleSubmit}>
-            <h1 className="title is-1">Register page</h1>
             <div className="field">
               <label className="label">Name</label>
               <div className="control">
@@ -73,11 +82,9 @@ class Register extends React.Component {
             </div>
             {this.state.errors.email && <small className="help is-danger">{this.state.errors.email}</small>}
 
-            {this.state.credentials.profile_image && <figure className="image profile-picture is-128x128">
-              <img src={this.state.credentials.profile_image} />
-            </figure>}
 
-            <div className="field">
+
+            {/* <div className="field">
               <label className="label">Profile image</label>
               <div className="control">
                 <input
@@ -85,12 +92,12 @@ class Register extends React.Component {
                   name="profile_image"
                   placeholder="Image URL"
                   onChange={this.handleChange}
-                  //value={this.state.profile_image || this.state.avatar}
                 />
               </div>
             </div>
             {this.state.errors.profile_image && <small className="help is-danger">{this.state.errors.profile_image}</small>}
-
+          */}
+          
             <div className="field">
               <label className="label">Password</label>
               <div className="control">

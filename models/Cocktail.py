@@ -1,7 +1,7 @@
 from app import db, ma
 from marshmallow import fields, post_dump
-from .Ingredient import Ingredient, IngredientSchema
-from flask import jsonify
+from .Ingredient import Ingredient
+# from flask import jsonify
 
 
 class CocktailIngredient(db.Model):
