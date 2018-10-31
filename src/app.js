@@ -9,7 +9,7 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 // import Modal from './components/Modal';
 import Register from './components/Register';
-import Profile from './components/users/Profile';
+// import Profile from './components/users/Profile';
 import ProfileEdit from './components/users/ProfileEdit';
 import CocktailsIndex from './components/cocktails/CocktailsIndex';
 // import CocktailsHome from './components/cocktails/CocktailsHome';
@@ -34,7 +34,7 @@ class App extends React.Component {
                 <Route path="/cocktails/:id" component={CocktailsShow} />
                 {/* <Route path="/cocktails" component={CocktailsIndex} /> */}
                 <Route path="/edit" component={ProfileEdit} />
-                <Route path="/profile" component={Profile} />
+                {/* <Route path="/profile" component={Profile} /> */}
                 <Route path="/" component={CocktailsIndex} />
               </Switch>
 

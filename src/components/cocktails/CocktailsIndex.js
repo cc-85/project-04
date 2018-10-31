@@ -6,6 +6,7 @@ import _ from 'lodash';
 import Auth from '../../lib/Auth';
 import Promise from 'bluebird';
 import Profile from '../users/Profile';
+import NotSignedInCard from '../users/NotSignedInCard';
 import Modal from '../Modal';
 
 class CocktailsIndex extends React.Component {
@@ -121,7 +122,7 @@ class CocktailsIndex extends React.Component {
               ingredients={this.state.ingredients}
             />
           ) : (
-            <p>Sign in</p>
+            <NotSignedInCard/>
           )}
 
           <FilterBar handleChange={this.handleSearch} />
