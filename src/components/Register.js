@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Auth from '../lib/Auth';
-
+import Flash from '../lib/Flash';
 
 class Register extends React.Component {
   constructor() {
@@ -22,6 +22,7 @@ class Register extends React.Component {
       .post('/api/register', this.state.credentials)
       .then( res => {
         Auth.setToken(res.data.token);
+        Flash.setMessage('success', 'Account created!');
         this.props.history.push('/');
       })
       .catch(() => this.setState({error: 'Invalid credentials'}));
@@ -35,12 +36,12 @@ class Register extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <h1 className="title is-1">Register page</h1>
             <div className="field">
-              <label className="label">User Name</label>
+              <label className="label">Name</label>
               <div className="control">
                 <input
                   className={`input ${this.state.error ? 'is-danger' : ''} `}
-                  name="username"
-                  placeholder="User Name"
+                  name="name"
+                  placeholder="Name"
                   onChange={this.handleChange}
                 />
               </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Auth from '../lib/Auth';
+import Flash from '../lib/Flash';
 
 class Login extends React.Component {
   constructor() {
@@ -21,7 +22,7 @@ class Login extends React.Component {
       .post('/api/login', this.state.credentials)
       .then( res => {
         Auth.setToken(res.data.token);
-
+        Flash.setMessage('success', 'Welcome back!');
         this.props.history.push('/');
       })
       .catch(() => this.setState({error: 'Invalid credentials'}));
@@ -38,9 +39,9 @@ class Login extends React.Component {
               <label className="label">Email</label>
               <div className="control">
                 <input
-                  className={`input ${this.state.error ? 'is-danger' : ''} `} 
-                  name="email" 
-                  placeholder="Email" onChange={this.handleChange} 
+                  className={`input ${this.state.error ? 'is-danger' : ''} `}
+                  name="email"
+                  placeholder="Email" onChange={this.handleChange}
                 />
               </div>
             </div>

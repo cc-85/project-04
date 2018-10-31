@@ -26,7 +26,7 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False, unique=True)
+    username = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(128), nullable=False, unique=True)
     _password = db.Column(db.String(128))
     profile_image = db.Column(db.String(128), nullable=True)
