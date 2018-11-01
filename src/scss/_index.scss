@@ -1,14 +1,38 @@
-.full-match {
-  background-color: #8BD6C3;
+.card.full-match, .card.part-match {
+  background-color: $darkgrey;
 }
 
-.part-match {
-  background-color: #FFF1A3;
+.full-match p.card-header-title, .part-match p.card-header-title {
+  color: white;
 }
 
-.highlight {
-  color: red;
+.card {
+  background-color: #E6E6E6;
 }
+
+.card.ingredients {
+  background-color: white;
+}
+
+.level {
+  width: 100%;
+}
+
+i.fas.fa-check.index {
+  color: gold;
+  padding: 0 2px;
+}
+
+// .part-match {
+//   background-color: #E6E6E6;
+//   // box-shadow: 0px 0px 5px 8px lightsteelblue;
+//   border: 5px solid gold;
+// }
+
+
+// .highlight {
+//   color: red;
+// }
 
 .card-header-title, .title.is-2, .subtitle.is-4, .subtitle.is-3 {
   font-family: 'Poiret One', cursive;
@@ -16,5 +40,5 @@
 }
 
 input.input {
-  margin: 15px 0 5px 0;
+  margin: 25px 0 15px 0;
 }

@@ -7,6 +7,7 @@ import './scss/style.scss';
 
 import FlashMessages from './components/FlashMessages';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Login from './components/Login';
 // import Modal from './components/Modal';
 import Register from './components/Register';
@@ -42,8 +43,10 @@ class App extends React.Component {
             </div>
 
           </main>
+          <Footer />
         </div>
       </BrowserRouter>
+
     );
   }
 }
