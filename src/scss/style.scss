@@ -1,11 +1,32 @@
-.full-match {
-  background-color: #66ffcc;
+@import 'variables.scss';
+@import 'forms.scss';
+@import 'index.scss';
+@import 'show.scss';
+@import 'userPanel.scss';
+
+body {
+  background-color: $lightgrey;
+  // background-image: url("../assets/images/tile.png");
+  // background-repeat: repeat;
 }
 
-.part-match {
-  background-color: #ffff66;
+.navbar.is-fixed-bottom, .navbar.is-fixed-top {
+  background-color: $darkgrey;
 }
 
-.highlight {
-  color: red;
+a.navbar-item, .navbar-link {
+  color: $gold;
+}
+
+.navbar-item img {
+  max-height: 2.5rem;
+}
+
+p {
+  font-family: 'Raleway', sans-serif;
+  color: $darkgrey;
+}
+
+h1.cocktails-title {
+  display: none;
 }

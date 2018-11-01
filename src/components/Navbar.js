@@ -42,6 +42,7 @@ class Navbar extends React.Component {
           <div className="navbar-brand">
             <Link className="navbar-item logo" to="/">
               <h1 className="cocktails-title">Cocktails App</h1>
+              <img src="/assets/images/tippled-logo.png" alt="Tippled" />
             </Link>
 
             <a role="button"
