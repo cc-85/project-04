@@ -1,4 +1,5 @@
 from app import db, ma, bcrypt
+from flask import g
 from sqlalchemy.ext.hybrid import hybrid_property
 from marshmallow import fields, validates_schema, ValidationError, post_dump
 from .Ingredient import Ingredient
@@ -97,13 +98,16 @@ class UserSchema(ma.Schema):
                 'password_confirmation'
             )
 
-    # @validates_schema
-    # def validate_email(self, data):
-    #     if User.query.filter_by(email=data.get('email')).first() is not None:
-    #         raise ValidationError(
-    #             'That email is already registered',
-    #             'email'
-    #         )
+    @validates_schema
+    def validate_email(self, data):
+        is_logged_in = hasattr(g, 'current_user')
+        user = User.query.filter_by(email=data.get('email')).first()
+
+        if user is not None and (is_logged_in and g.current_user.id != user.id or not is_logged_in):
+            raise ValidationError(
+                'That email is already registered',
+                'email'
+            )
 
     class Meta:
         model = User
