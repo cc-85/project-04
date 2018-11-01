@@ -1,9 +1,9 @@
 .full-match {
-  background-color: #66ffcc;
+  background-color: #8BD6C3;
 }
 
 .part-match {
-  background-color: #ffff66;
+  background-color: #FFF1A3;
 }
 
 .highlight {
@@ -13,4 +13,8 @@
 .card-header-title, .title.is-2, .subtitle.is-4, .subtitle.is-3 {
   font-family: 'Poiret One', cursive;
   color: $darkgrey;
+}
+
+input.input {
+  margin: 15px 0 5px 0;
 }

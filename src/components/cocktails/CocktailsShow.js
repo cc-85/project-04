@@ -40,17 +40,18 @@ class CocktailsShow extends React.Component {
             </div>
 
             <div className="column is-half">
-              <h1 className="title is-2">{ this.state.cocktail.name }</h1>
+              <h1 className="title is-1">{ this.state.cocktail.name }</h1>
               <h2 className="subtitle is-3">Ingredients</h2>
               {this.state.cocktail.ingredients.map(ingredient =>
                 //<div className={`card ${this.hasIngredients(cocktail) ? 'highlight' : ''}`}>
                 <div key={ingredient.name}>
                   {/* <p className={this.state.ingredients.includes(ingredient.name) ? 'highlight' : ''}> */}
-                  <p>{this.state.ingredients.includes(ingredient.name) ? '✅' : '🅾️'}
+                  <p>{this.state.ingredients.includes(ingredient.name) ? <i className="far fa-check-circle"></i> : <i className="far fa-circle"></i>}
                     {ingredient.amount} {ingredient.name}
                   </p>
                 </div>
               )}
+              <hr />
               <h2 className="subtitle is-3">Method</h2>
               <p>{ this.state.cocktail.method }</p>
             </div>
