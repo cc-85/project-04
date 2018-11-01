@@ -48,3 +48,12 @@ main.section {
   display: flex;
   justify-content: center;
 }
+
+
+div.column.is-one-quarter {
+  min-width: 120px;
+}
+
+div.box.secondary.is-hidden-tablet {
+  margin: 45px;
+}

@@ -56,7 +56,7 @@ class Register extends React.Component {
                 </figure>
               </div>
             </div>
-            <p className="has-text-centered">Create a Tippled account and see which drinks you can make with the ingredients you have at hand.</p>
+            <p className="has-text-centered">Create a Tippled account and see which drinks you can make with the ingredients you have.</p>
 
             <div className="columns field is-mobile">
               <div className="column is-one-quarter">

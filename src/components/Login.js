@@ -38,7 +38,7 @@ class Login extends React.Component {
 
             {/* First column */}
 
-            <div className="vertical-flex">
+            <div className="vertical-flex is-hidden-mobile">
               <div className="box secondary">
                 <p className="has-text-centered">If you do not have a Tippled account, please register</p>
                 <div className="control">
@@ -116,6 +116,23 @@ class Login extends React.Component {
             </div>
 
           </div>
+
+
+        </div>
+        <div className="box secondary is-hidden-tablet">
+          <p className="has-text-centered">If you do not have a Tippled account, please register</p>
+          <div className="control">
+            <div className="level control">
+              <div className="level-item">
+                <Link to="/register">
+                  <button className="button">Register</button>
+                </Link>
+
+              </div>
+            </div>
+          </div>
+
+
         </div>
 
 
