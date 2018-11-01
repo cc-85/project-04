@@ -4,7 +4,7 @@
 @import 'show.scss';
 @import 'userPanel.scss';
 
-body {
+html {
   background-color: $lightgrey;
   // background-image: url("../assets/images/tile.png");
   // background-repeat: repeat;
@@ -22,6 +22,11 @@ a.navbar-item, .navbar-link {
   max-height: 2.5rem;
 }
 
+a.navbar-item:hover {
+  background-color: transparent;
+  color: $lightgold;
+}
+
 p {
   font-family: 'Raleway', sans-serif;
   color: $darkgrey;
@@ -29,4 +34,12 @@ p {
 
 h1.cocktails-title {
   display: none;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Poiret One', cursive;
+}
+
+hr {
+  background-color: $darkgrey;
 }

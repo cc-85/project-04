@@ -1,0 +1,8 @@
+.fa, .far, .fas {
+  padding: 5px 10px 5px 0;
+  font-size: 15px;
+}
+
+.title:not(.is-spaced) + .subtitle {
+  margin-top: 0;
+}
