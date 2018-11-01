@@ -134,7 +134,16 @@ class CocktailsIndex extends React.Component {
                 <div className={`card ${this.getClassName(cocktail)}`}>
                   <div className="card-header">
                     <p className="card-header-title">
-                      {cocktail.name}
+                      <div className="level">
+                        <div className="level-left">
+                          {cocktail.name}
+                        </div>
+                        <div className="level-right">
+                          {this.getClassName(cocktail) === 'full-match' ? <span className="checks"><i className="fas fa-check index"></i><i className="fas fa-check index"></i><i className="fas fa-check index"></i></span> : ''}<span className="checks">
+                            {this.getClassName(cocktail) === 'part-match' ? <i className="fas fa-check index"></i> : ''}
+                          </span>
+                        </div>
+                      </div>
                     </p>
                   </div>
 
