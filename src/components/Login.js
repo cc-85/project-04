@@ -37,20 +37,24 @@ class Login extends React.Component {
           <form onSubmit={this.handleSubmit}>
 
             <div className="columns">
-              <div className="column">
+              <div className="column is-two-fifths">
 
                 {/* First column */}
-                <div className="box">
-                  <p>If you don't have a Tippled account, please register</p>
-                  <div className="control">
-                    <div className="level control">
-                      <div className="level-item">
-                        <Link to="/register">
-                          <button className="button is-primary">Register</button>
-                        </Link>
 
+                <div className="vertical-flex">
+                  <div className="box secondary">
+                    <p className="has-text-centered">If you don't have a Tippled account, please register</p>
+                    <div className="control">
+                      <div className="level control">
+                        <div className="level-item">
+                          <Link to="/register">
+                            <button className="button">Register</button>
+                          </Link>
+
+                        </div>
                       </div>
                     </div>
+
                   </div>
 
                 </div>
@@ -63,15 +67,12 @@ class Login extends React.Component {
 
                 <div className="columns">
                   <div className="column is-one-quarter">
-                    {/* First SUBcolumn */}
+
                     <label className="label">Email</label>
 
-                    <label className="label">Password</label>
-
                   </div>
-                  <div className="column">
+                  <div className="column primary">
                     {/* Second SUBcolumn */}
-
 
                     <div className="control">
                       <input
@@ -80,6 +81,19 @@ class Login extends React.Component {
                         placeholder="Email" onChange={this.handleChange}
                       />
                     </div>
+
+                  </div>
+                </div>
+
+                <div className="columns">
+                  <div className="column is-one-quarter">
+                    {/* First SUBcolumn */}
+
+                    <label className="label">Password</label>
+
+                  </div>
+                  <div className="column primary">
+                    {/* Second SUBcolumn */}
 
                     <div className="control">
                       <input
@@ -91,19 +105,19 @@ class Login extends React.Component {
                       />
                     </div>
 
-                    <div className="control">
-                      <div className="level control">
-                        <div className="level-item">
-                          <button className="button is-primary">Sign in</button>
-                        </div>
-                      </div>
-                    </div>
 
                   </div>
 
 
                 </div>
 
+                <div className="control">
+                  <div className="level control">
+                    <div className="level-item">
+                      <button className="button">Sign in</button>
+                    </div>
+                  </div>
+                </div>
 
               </div>
             </div>
