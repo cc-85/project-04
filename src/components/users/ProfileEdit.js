@@ -54,6 +54,8 @@ class ProfileEdit extends React.Component {
 
           <h1 className="title is-1">User Profile Edit Page</h1>
 
+          <div className="box"></div>
+
           <figure className="image profile-picture is-128x128">
             {!this.state.user.profile_image ? <img src='./assets/images/person-placeholder.jpg' /> : <img src={ this.state.user.profile_image } /> }
           </figure>

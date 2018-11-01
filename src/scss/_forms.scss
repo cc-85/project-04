@@ -1,0 +1,45 @@
+
+
+button.button {
+  font-family: 'Poiret One', cursive;
+  border-radius: 0;
+  background-color: white;
+
+  border: 1px solid gold;
+  margin: 30px;
+}
+label {
+  font-family: 'Poiret One', cursive;
+  padding: 20px;
+}
+
+h1 {
+  font-family: 'Poiret One', cursive;
+}
+
+div.column.is-two-fifths {
+  display: flex;
+  justify-content: center;
+
+}
+
+div.vertical-flex {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+div.box{
+  border-radius: 0;
+}
+
+div.box.secondary{
+  height: 148px;
+
+}
+
+div.box.primary{
+  height: 60vh;
+  padding: 34px;
+
+}

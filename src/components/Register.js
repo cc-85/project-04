@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Auth from '../lib/Auth';
 import Flash from '../lib/Flash';
+import {Link} from 'react-router-dom';
 
 class Register extends React.Component {
   constructor() {
@@ -42,96 +43,145 @@ class Register extends React.Component {
 
   render() {
     return (
-
       <main className="section">
         <div className="container">
-          <h1 className="title is-1">Register page</h1>
-
-          {/* {this.state.credentials.profile_image && <figure className="image profile-picture is-128x128">
-            <img src={this.state.credentials.profile_image} />
-          </figure>} */}
-
-          <figure className="image profile-picture is-128x128">
-            {!this.state.credentials.profile_image ? <img src='./assets/images/person-placeholder.jpg' /> : <img src={this.state.credentials.profile_image} />}
-          </figure>
-
           <form onSubmit={this.handleSubmit}>
-            <div className="field">
-              <label className="label">Name</label>
-              <div className="control">
-                <input
-                  className={`input ${this.state.errors.username ? 'is-danger' : ''} `}
-                  name="username"
-                  placeholder="Name"
-                  onChange={this.handleChange}
-                />
+            <div className="columns">
+              <div className="column box">
+                {/* Second column */}
+                <h1 className="title is-1 has-text-centered">Register</h1>
+                <div className="level">
+                  <div className="level-item">
+                    <figure className="image profile-picture is-128x128">
+                      {!this.state.credentials.profile_image ? <img src='./assets/images/person-placeholder.jpg' /> : <img src={this.state.credentials.profile_image} />}
+                    </figure>
+                  </div>
+                </div>
+                <p className="has-text-centered">Create a Tippled account and see which drinks you can make with the ingredients you have at hand.</p>
+
+                <div className="columns field is-mobile">
+                  <div className="column is-one-quarter">
+                    <label className="label">Name</label>
+                  </div>
+                  <div className="column primary">
+                    {/* Second SUBcolumn */}
+                    <div className="control">
+                      <input
+                        className={`input ${this.state.errors.username ? 'is-danger' : ''} `}
+                        name="username"
+                        placeholder="Name"
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                  </div>
+                  {this.state.errors.username && <small className="help is-danger">{this.state.errors.username}</small>}
+                </div>
+
+
+                <div className="columns field is-mobile">
+                  <div className="column is-one-quarter">
+
+                    <label className="label">Email</label>
+
+                  </div>
+                  <div className="column primary">
+                    {/* Second SUBcolumn */}
+
+                    <div className="control">
+                      <input
+                        className={`input ${this.state.errors.email ? 'is-danger' : ''} `}
+                        name="email"
+                        placeholder="Email"
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                    {this.state.errors.email && <small className="help is-danger">{this.state.errors.email}</small>}
+
+                  </div>
+                </div>
+
+                <div className="columns field is-mobile">
+                  <div className="column is-one-quarter">
+
+                    <label className="label">Password</label>
+
+                  </div>
+                  <div className="column primary">
+                    {/* Second SUBcolumn */}
+
+                    <div className="control">
+                      <input
+                        className={`input ${this.state.errors.password ? 'is-danger' : ''} `}
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                    {this.state.errors.password && <small className="help is-danger">{this.state.errors.password}</small>}
+
+                  </div>
+                </div>
+
+                <div className="columns field is-mobile">
+                  <div className="column is-one-quarter">
+
+                    <label className="label">Confirmation Password</label>
+
+                  </div>
+                  <div className="column primary">
+                    {/* Second SUBcolumn */}
+
+                    <div className="control">
+                      <input
+                        className={`input ${this.state.errors.password_confirmation ? 'is-danger' : ''} `}
+                        name="password_confirmation"
+                        type="password"
+                        placeholder="Password"
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                    {this.state.errors.password_confirmation && <small className="help is-danger">{this.state.errors.password_confirmation}</small>}
+
+                  </div>
+                </div>
+
+
+                <div className="control">
+                  <div className="level control">
+                    <div className="level-item">
+                      <button className="button">Register</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div className="column is-two-fifths">
+
+                {/* First column */}
+
+                <div className="vertical-flex">
+                  <div className="box secondary">
+                    <p className="has-text-centered">If you already have a Tippled account, please sign in.</p>
+                    <div className="control">
+                      <div className="level control">
+                        <div className="level-item">
+                          <Link to="/login">
+                            <button className="button">Sign in</button>
+                          </Link>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
               </div>
             </div>
-            {this.state.errors.username && <small className="help is-danger">{this.state.errors.username}</small>}
-
-            <div className="field">
-              <label className="label">Email</label>
-              <div className="control">
-                <input
-                  className={`input ${this.state.errors.email ? 'is-danger' : ''} `}
-                  name="email"
-                  placeholder="Email"
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-            {this.state.errors.email && <small className="help is-danger">{this.state.errors.email}</small>}
-
-
-
-            {/* <div className="field">
-              <label className="label">Profile image</label>
-              <div className="control">
-                <input
-                  className={`input ${this.state.errors.profile_image ? 'is-danger' : ''} `}
-                  name="profile_image"
-                  placeholder="Image URL"
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-            {this.state.errors.profile_image && <small className="help is-danger">{this.state.errors.profile_image}</small>}
-          */}
-          
-            <div className="field">
-              <label className="label">Password</label>
-              <div className="control">
-                <input
-                  className={`input ${this.state.errors.password ? 'is-danger' : ''} `}
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-            {this.state.errors.password && <small className="help is-danger">{this.state.errors.password}</small>}
-
-            <div className="field">
-              <label className="label">Confirmation Password</label>
-              <div className="control">
-                <input
-                  className={`input ${this.state.errors.password_confirmation ? 'is-danger' : ''} `}
-                  name="password_confirmation"
-                  type="password"
-                  placeholder="Password"
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-            {this.state.errors.password_confirmation && <small className="help is-danger">{this.state.errors.password_confirmation}</small>}
-
-            <button className="button is-primary">Submit</button>
-
           </form>
         </div>
       </main>
-
     );
   }
 }
