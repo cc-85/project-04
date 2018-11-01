@@ -104,7 +104,7 @@ class Login extends React.Component {
                         onChange={this.handleChange}
                       />
                     </div>
-
+                    {this.state.errors && <small className="help is-danger">{this.state.errors}</small>}
 
                   </div>
 
