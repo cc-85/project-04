@@ -1,25 +1,14 @@
 from app import app, db
-from models.Cocktail import Cocktail, CocktailIngredient
-from models.User import User
-from models.Ingredient import Ingredient
-from flask import jsonify
+from models.Cocktail import Cocktail
+# from models.User import User
+# from models.Ingredient import Ingredient
+# from flask import jsonify
 import requests
-import re
 
 
 with app.app_context():
     db.drop_all()
     db.create_all()
-
-    # response = requests.get('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=13427').json()
-    # print(response['drinks'][0]['strDrink'])
-    #
-    # mojito = Cocktail({
-    #     'name': response['drinks'][0]['strDrink'],
-    #     'method': response['drinks'][0]['strInstructions'],
-    #     'image': response['drinks'][0]['strDrinkThumb'],
-    # })
-    # mojito.save()
 
     # all_ingredients = requests.get('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list').json()
     # # print(all_ingredients['drinks'])
@@ -32,18 +21,21 @@ with app.app_context():
     #     })
     #     ingredient_name.save()
 
-    # old_fashioned = Cocktail({
-    #     'name': 'Old Fashioned',
-    #     'method': 'Place sugar cube in old fashioned glass and saturate with bitters, add a dash of plain water. Muddle until dissolved.\r\nFill the glass with ice cubes and add whiskey.\r\n\r\nGarnish with orange twist, and a cocktail cherry.',
-    #     'image': 'https://www.thecocktaildb.com/images/media/drink/vrwquq1478252802.jpg',
-    # })
-    # ingredients = [{"amount": "a dash", "name": "Whiskey"}, {"amount": "lots of", "name": "Gin"}]
-    #
-    # old_fashioned.add_ingredients(ingredients)
-    #
-    # old_fashioned.save()
+    blueberry_smash = Cocktail({
+        'name': 'Blueberry Smash',
+        'method': 'Fill a glass with ice. Add the blueberry thyme syrup, followed by the Gin, and top with the lemon-lime soda. Stir gently to combine, then garnish with fresh blueberries, thyme sprigs, and a slice of fresh lime. Enjoy responsibly.',
+        'image': 'https://i.postimg.cc/j5vBYfj7/Easy-Cocktail-Recipes-Blueberry-Thyme-Smash-7.jpg',
+    })
+    ingredients = [{"amount": "2 Tbsp", "name": "Blueberry thyme syrup"}, {"amount": "2 oz", "name": "Gin"}, {"amount": "5 oz", "name": "Sprite"}]
 
-    all_cocktails = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Egg').json()
+    blueberry_smash.add_ingredients(ingredients)
+
+    blueberry_smash.save()
+
+    # TEST SEEDS:
+    # all_cocktails = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Egg').json()
+
+    all_cocktails = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic').json()
     # print(all_cocktails['drinks'])
 
     for each_cocktail in all_cocktails['drinks']:
@@ -60,18 +52,11 @@ with app.app_context():
             'image': one_cocktail['drinks'][0]['strDrinkThumb'],
         })
 
-        # ingr1_type = one_cocktail['drinks'][0]['strIngredient1']
-        # ingr1_amount = one_cocktail['drinks'][0]['strMeasure1']
-
-        # ingredients = []
-
         i = 1
         while i < 15:
             # print(one_cocktail['drinks'][0]['strIngredient{}'.format(i)])
 
             if (one_cocktail['drinks'][0]['strIngredient{}'.format(i)] != '' and one_cocktail['drinks'][0]['strIngredient{}'.format(i)] is not None):
-                # ingr_type = one_cocktail['drinks'][0]['strIngredient{}'.format(i)]
-                # ingr_measure = one_cocktail['drinks'][0]['strMeasure{}'.format(i)]
 
                 ingr_type = one_cocktail['drinks'][0]['strIngredient{}'.format(i)]
                 ingr_amount = one_cocktail['drinks'][0]['strMeasure{}'.format(i)]
@@ -82,47 +67,4 @@ with app.app_context():
 
             i += 1
 
-        # ingredients = [{"amount": ingr1_amount, "name": ingr1_type}, {"amount": "lots of", "name": "Gin"}]
-        # ingredients.append({"amount": ingr1_amount, "name": ingr1_type})
-        # ingredients.append({"amount": "lots of", "name": "Gin"})
-
-        # print(ingredients)
-        # cocktail_name.add_ingredients(ingredients)
-
         cocktail_name.save()
-        #     'name': each_ingredient['strIngredient1']
-        # })
-        # ingredient_name.save()
-
-    # response = requests.get('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=13427').json()
-    # print(response['drinks'][0]['strDrink'])
-    #
-    # mojito = Cocktail({
-    #     'name': response['drinks'][0]['strDrink'],
-    #     'method': response['drinks'][0]['strInstructions'],
-    #     'image': response['drinks'][0]['strDrinkThumb'],
-    # })
-    # mojito.save()
-
-    # print('Database successfully seeded, cheers!')
-    #
-    # caoimhe = User({
-    #     'username': 'CC-85',
-    #     'email': 'CC-85@gmail.com',
-    #     'password': 'pass',
-    #     'password_confirmation': 'pass'
-    # })
-    #
-    # caoimhe.user_ingredients.append(gin)
-    #
-    # caoimhe.save()
-
-
-# category = Category(name=item)
-# session.add(category)
-# If you want to add a restaurant and link it to the category, you can append the category to the Restaurant object:
-#
-# restaurant = Restaurant(restaurant_id = 'ABC123', price_range = 1)
-# restaurant.categories.append(category)
-# session.add(restaurant)
-# session.commit()
