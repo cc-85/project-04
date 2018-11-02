@@ -17,10 +17,10 @@ const Profile = ({ user, ingredients, handleChange }) => {
             </div>
           )}
           <div className="media-content">
-            <a href= "/edit"><p className="title is-4">{ user.username }</p></a>
+            <a href= "/edit"><p className="title is-4 username">{ user.username }</p></a>
           </div>
           <div className="media-right">
-            <Link href="#" className="navbar-item nav-icon" to="/edit">Edit Profile</Link>
+            <Link href="#" className="navbar-item nav-icon edit" to="/edit">Edit Profile</Link>
           </div>
         </div>
 

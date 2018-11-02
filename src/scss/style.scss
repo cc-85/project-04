@@ -22,6 +22,18 @@ a.navbar-item, .navbar-link {
   max-height: 2.5rem;
 }
 
+.navbar-burger {
+  color: $gold;
+}
+
+.navbar-burger:hover {
+  color: $lightgold;
+}
+
+.footer {
+  background-color: white;
+}
+
 a.navbar-item:hover {
   background-color: transparent;
   color: $lightgold;

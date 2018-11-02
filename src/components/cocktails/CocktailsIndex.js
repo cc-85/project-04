@@ -127,9 +127,9 @@ class CocktailsIndex extends React.Component {
 
         <FilterBar handleChange={this.handleSearch} />
 
-        <div className="columns is-multiline">
+        <div className="columns is-mobile is-multiline">
           {this.getOrderedAndFilteredCocktails().map(cocktail =>
-            <div key={cocktail.id} className="column is-one-quarter">
+            <div key={cocktail.id} className="column is-one-quarter-desktop is-one-third-tablet is-half-mobile">
               <Link to={`/cocktails/${cocktail.id}`}>
                 <div className={`card ${this.getClassName(cocktail)}`}>
                   <div className="card-header">
