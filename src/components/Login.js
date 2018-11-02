@@ -31,102 +31,113 @@ class Login extends React.Component {
 
   render() {
     return (
-      <main className="section">
-        <div className="container">
+      <form onSubmit={this.handleSubmit}>
 
-          <form onSubmit={this.handleSubmit}>
+        <div className="columns">
+          <div className="column is-two-fifths">
 
-            <div className="columns">
-              <div className="column is-two-fifths">
+            {/* First column */}
 
-                {/* First column */}
-
-                <div className="vertical-flex">
-                  <div className="box secondary">
-                    <p className="has-text-centered">If you do not have a Tippled account, please register</p>
-                    <div className="control">
-                      <div className="level control">
-                        <div className="level-item">
-                          <Link to="/register">
-                            <button className="button">Register</button>
-                          </Link>
-
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-              </div>
-
-              <div className="column box">
-                {/* Second column */}
-
-                <h1 className="title is-1 has-text-centered">Sign in</h1>
-
-                <div className="columns field is-mobile">
-                  <div className="column is-one-quarter">
-
-                    <label className="label">Email</label>
-
-                  </div>
-                  <div className="column primary">
-                    {/* Second SUBcolumn */}
-
-                    <div className="control">
-                      <input
-                        className={`input ${this.state.errors ? 'is-danger' : ''} `}
-                        name="email"
-                        placeholder="Email" onChange={this.handleChange}
-                      />
-                    </div>
-
-                  </div>
-                </div>
-
-                <div className="columns field is-mobile">
-                  <div className="column is-one-quarter">
-                    {/* First SUBcolumn */}
-
-                    <label className="label">Password</label>
-
-                  </div>
-                  <div className="column primary">
-                    {/* Second SUBcolumn */}
-
-                    <div className="control">
-                      <input
-                        className={`input ${this.state.errors ? 'is-danger' : ''} `}
-                        name="password"
-                        placeholder="Password"
-                        type="password"
-                        onChange={this.handleChange}
-                      />
-                    </div>
-                    {this.state.errors && <small className="help is-danger">{this.state.errors}</small>}
-
-                  </div>
-
-
-                </div>
-
+            <div className="vertical-flex is-hidden-mobile">
+              <div className="box secondary">
+                <p className="has-text-centered">If you do not have a Tippled account, please register</p>
                 <div className="control">
                   <div className="level control">
                     <div className="level-item">
-                      <button className="button">Sign in</button>
+                      <Link to="/register">
+                        <button className="button">Register</button>
+                      </Link>
+
                     </div>
                   </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div className="column box">
+            {/* Second column */}
+
+            <h1 className="title is-1 has-text-centered">Sign in</h1>
+
+            <div className="columns field is-mobile">
+              <div className="column is-one-quarter">
+
+                <label className="label">Email</label>
+
+              </div>
+              <div className="column primary">
+                {/* Second SUBcolumn */}
+
+                <div className="control">
+                  <input
+                    className={`input ${this.state.errors ? 'is-danger' : ''} `}
+                    name="email"
+                    placeholder="Email" onChange={this.handleChange}
+                  />
                 </div>
 
               </div>
             </div>
 
+            <div className="columns field is-mobile">
+              <div className="column is-one-quarter">
 
 
-          </form>
+                <label className="label">Password</label>
+
+              </div>
+              <div className="column primary">
+
+                <div className="control">
+                  <input
+                    className={`input ${this.state.errors ? 'is-danger' : ''} `}
+                    name="password"
+                    placeholder="Password"
+                    type="password"
+                    onChange={this.handleChange}
+                  />
+                </div>
+                {this.state.errors && <small className="help is-danger">{this.state.errors}</small>}
+
+              </div>
+
+
+            </div>
+
+            <div className="control">
+              <div className="level control">
+                <div className="level-item">
+                  <button className="button">Sign in</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
         </div>
-      </main>
+        <div className="box secondary is-hidden-tablet">
+          <p className="has-text-centered">If you do not have a Tippled account, please register</p>
+          <div className="control">
+            <div className="level control">
+              <div className="level-item">
+                <Link to="/register">
+                  <button className="button">Register</button>
+                </Link>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+      </form>
     );
   }
 }
