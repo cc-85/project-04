@@ -5,13 +5,13 @@ const NotSignedInCard = () => {
 
 
   return (
-    <div className="card">
+    <div className="card signin">
 
-      <div className="card-content">
+      <div className="card-content level">
 
 
-        <div className="content">
-          <p>🍸 <Link href="#" to="/login"> Log in</Link> or <Link href="#" to="/register"> Register</Link> to filter cocktails by the ingredients you own! 🍸</p>
+        <div className="content level-item">
+          <p><Link href="#" to="/login"> Sign in</Link> or <Link href="#" to="/register"> Register</Link> to see which cocktails you can make with the ingredients you have!</p>
         </div>
 
       </div>
