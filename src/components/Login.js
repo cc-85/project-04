@@ -31,7 +31,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <div>
 
         <div className="columns">
           <div className="column is-two-fifths">
@@ -57,7 +57,7 @@ class Login extends React.Component {
             </div>
           </div>
 
-          <div className="column box">
+          <form onSubmit={this.handleSubmit} className="column box">
             {/* Second column */}
 
             <h1 className="title is-1 has-text-centered">Sign in</h1>
@@ -115,7 +115,7 @@ class Login extends React.Component {
               </div>
             </div>
 
-          </div>
+          </form>
 
 
         </div>
@@ -137,7 +137,7 @@ class Login extends React.Component {
 
 
 
-      </form>
+      </div>
     );
   }
 }
