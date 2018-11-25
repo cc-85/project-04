@@ -16,15 +16,13 @@
 
 ## My Platform - Tippled
 
-<img width="1164" alt="screen shot 2018-09-20 at 13 55 10" src="https://user-images.githubusercontent.com/32750083/48950010-b261f400-ef31-11e8-82b0-5b93513f8a2a.png">
-
 ### Platform overview
 A cocktails app where users can enter ingredients they have to see what they can make.
 
 ### Platform Instructions
 1. When a user first arrives on to the homepage, they will see a search bar where they can search by individual cocktail names or ingredients. Below this is a list of all the cocktails in the database, organised alphabetically by name. If a user types into the search bar the list of products will automatically update. At the very top of the page is a prompt for the user to sign in or register to access the full benefits of the site.
 
-![register](https://user-images.githubusercontent.com/32750083/48950239-6a8f9c80-ef32-11e8-9ad9-0bf4d714bded.png)
+<img width="1164" alt="screen shot 2018-09-20 at 13 55 10" src="https://user-images.githubusercontent.com/32750083/48950010-b261f400-ef31-11e8-82b0-5b93513f8a2a.png">
 
 2. To create an account, users will need to fill out their name, email and password. Upon typing in their name, a randomly generated avatar image will appear at the top, this profile image can be amended by the user once they are logged in. Once they have registered they will be taken back to the homepage as a logged in user.
 
