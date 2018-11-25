@@ -63,7 +63,7 @@ class ProfileEdit extends React.Component {
 
       <div className="box">
         <form onSubmit={this.handleSubmit}>
-          <h1 className="title is-1 has-text-centered">Edit account</h1>
+          <h1 className="title is-1 has-text-centered">Edit profile</h1>
 
           <div className="level">
             <div className="level-item">
